@@ -3,21 +3,53 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tu Nombre — CV & Repos</title>
-  <meta name="description" content="CV y repositorios destacados en GitHub." />
+  <title>Yasiel Llanos Yanes — CV & Repos</title>
+  <meta name="description" content="CV de Yasiel Llanos Yanes y repositorios destacados en GitHub." />
   <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 <body>
-  <div class="container">
+  <!-- ANIMACIÓN DE BIENVENIDA (SIEMPRE CON F5) -->
+<div id="welcome-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:var(--bg); z-index:9999; display:flex; justify-content:center; align-items:center; flex-direction:column; transition:opacity 1s ease;">
+  <div style="text-align:center; animation:fadeInUp 1s ease">
+    <h1 style="font-size:4rem; margin:0; color:var(--text);">👋 ¡Bienvenido!</h1>
+    <p style="font-size:1.5rem; color:var(--muted); margin-top:20px;">Yasiel Llanos Yanes - DAM</p>
+    <div style="width:50px; height:50px; border:3px solid var(--line); border-top-color:var(--brand); border-radius:50%; margin:30px auto; animation:spin 1s infinite linear;"></div>
+  </div>
+</div>
+
+<style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
+
+<!-- LINK A TU CSS ORIGINAL (modo claro por defecto) -->
+<link id="theme-style" rel="stylesheet" type="text/css" href="assets/css/styles.css">
+
+<div class="container">
   <header class="topbar">
     <div>
-      <h1 class="title">Tu Nombre</h1>
+      <h1 class="title">Yasiel Llanos Yanes</h1>
       <div class="subtitle">Estudiante de Desarrollo de Aplicaciones Multiplataforma (1º DAM)</div>
     </div>
     <nav style="display:flex;gap:10px">
+      <button id="themeToggle" class="btn" style="display:flex;align-items:center;gap:5px">
+        🌙
+      </button>
       <a class="btn" href="https://www.linkedin.com" target="_blank">LinkedIn</a>
-      <a class="btn" href="https://github.com/TUUSUARIO" target="_blank">GitHub</a>
-      <a class="btn" href="mailto:tuemail@ejemplo.com">Email</a>
+      <a class="btn" href="https://github.com/Lospro772" target="_blank">GitHub</a>
+      <a class="btn" href="mailto:yasllanyan@gmail.com">Email</a>
     </nav>
   </header>
 
@@ -25,10 +57,10 @@
     <h2>Sobre mí</h2>
     <div class="grid2">
       <div class="profile">
-        <img src="assets/img/perfil.jpg" alt="Foto de perfil">
+        <img src="assets/img/perfil.png" alt="Foto de perfil">
         <div class="bio">
           <p class="muted" style="margin:0">
-            Escribe aquí 3–4 líneas: qué estás aprendiendo, qué te gusta, en qué quieres mejorar.
+            Soy un estudiante de DAM motivado por aprender y mejorar continuamente mis habilidades de programación. Me gusta transformar ideas en aplicaciones funcionales.
           </p>
           <div class="pillrow">
             <span class="pill">Java</span>
@@ -42,13 +74,13 @@
       <div>
         <h3 style="margin:0 0 10px">Experiencia / Proyectos de clase</h3>
         <ul class="muted" style="margin:0;padding-left:18px">
-          <li>Proyecto DAM: “App de Notas” (CRUD + BBDD)</li>
-          <li>Proyecto Java: “Gestor de tareas” (POO + tests)</li>
+          <li>Proyecto DAM: "App de Notas" (CRUD + BBDD)</li>
+          <li>Proyecto Java: "Gestor de tareas" (POO + tests)</li>
         </ul>
 
         <h3 style="margin:16px 0 10px">Objetivo</h3>
         <p class="muted" style="margin:0">
-          Ejemplo: “Busco prácticas y mejorar en backend con Java/Spring y bases de datos.”
+          Busco prácticas y mejorar en backend con Java/Spring y bases de datos.
         </p>
       </div>
     </div>
@@ -83,15 +115,68 @@
 </div>
 
 <script>
-  const GITHUB_USERNAME = "TUUSUARIO"; // <- CAMBIA ESTO
+  const GITHUB_USERNAME = "Lospro772";
   const FEATURED_TOPIC = "showcase";
   let allRepos = [];
   let activeTopic = "all";
+
+  // ===== ANIMACIÓN DE BIENVENIDA (SIEMPRE CON F5) =====
+  function initWelcomeAnimation() {
+    const welcomeOverlay = document.getElementById('welcome-overlay');
+    
+    // Mostrar animación siempre
+    welcomeOverlay.style.display = 'flex';
+    welcomeOverlay.style.opacity = '1';
+    
+    // Ocultar después de 2.5 segundos
+    setTimeout(() => {
+      welcomeOverlay.style.opacity = '0';
+      setTimeout(() => {
+        welcomeOverlay.style.display = 'none';
+      }, 1000);
+    }, 2500);
+  }
+
+  // ===== MODO OSCURO CON ARCHIVOS EXTERNOS =====
+  function initThemeSwitcher() {
+    const themeToggle = document.getElementById('themeToggle');
+    const themeStyle = document.getElementById('theme-style');
+    
+    if (!themeToggle || !themeStyle) return;
+    
+    // Comprobar tema guardado
+    const darkMode = localStorage.getItem('darkMode') === 'true';
+    
+    // Aplicar tema inicial
+    if (darkMode) {
+      themeStyle.href = 'assets/css/style-dark.css';
+      themeToggle.textContent = '☀️';
+    } else {
+      themeStyle.href = 'assets/css/styles.css';
+      themeToggle.textContent = '🌙';
+    }
+    
+    // Evento del botón
+    themeToggle.addEventListener('click', function() {
+      const isDarkMode = themeToggle.textContent === '🌙';
+      
+      if (isDarkMode) {
+        themeStyle.href = 'assets/css/style-dark.css';
+        themeToggle.textContent = '☀️';
+        localStorage.setItem('darkMode', 'true');
+      } else {
+        themeStyle.href = 'assets/css/styles.css';
+        themeToggle.textContent = '🌙';
+        localStorage.setItem('darkMode', 'false');
+      }
+    });
+  }
 
   function formatDate(iso){
     const d = new Date(iso);
     return d.toLocaleDateString("es-ES", {year:"numeric", month:"short", day:"2-digit"});
   }
+  
   function cardBorderByIndex(i){
     return ["border-blue","border-violet","border-emerald"][i % 3];
   }
@@ -195,17 +280,18 @@
 
   async function main(){
     bindUI();
+    initWelcomeAnimation(); // Animación siempre con F5
+    initThemeSwitcher();    // Modo oscuro con archivos externos
     allRepos = await fetchRepos();
     renderFeatured(allRepos);
     renderRepos(allRepos);
   }
 
-  main().catch(err => {
-    document.getElementById("featured").innerHTML = `<div class="muted">${err.message}</div>`;
-    document.getElementById("repos").innerHTML = `<div class="muted">${err.message}</div>`;
-    console.error(err);
-  });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', main);
+  } else {
+    main();
+  }
 </script>
-
 </body>
 </html>
