@@ -38,6 +38,7 @@
     <a href="#trayectoria">Trayectoria</a>
     <a href="#destacados">Destacados</a>
     <a href="#repositorios">Repositorios</a>
+    <a href="#contacto">Contacto</a>
   </nav>
 
   <!-- Botón tema -->
@@ -81,16 +82,13 @@
             <span class="tech-pill">HTML/CSS</span>
             <span class="tech-pill">Git</span>
             <span class="tech-pill">JavaScript</span>
-            <span class="tech-pill">PogrestSQL</span>
+            <span class="tech-pill">PostgreSQL</span>
           </div>
 
           <div class="social-links">
             <a href="https://github.com/Lospro772" target="_blank" class="btn btn-primary">
               <i class="fab fa-github"></i> GitHub
             </a>
-            <!--<a href="https://linkedin.com" target="_blank" class="btn btn-outline">
-              <i class="fab fa-linkedin"></i> LinkedIn
-            </a>-->
             <a href="mailto:yasllanyan@gmail.com" class="btn btn-outline">
               <i class="fas fa-envelope"></i> Email
             </a>
@@ -108,6 +106,35 @@
             <i class="fas fa-database floating-icon" style="bottom: 20%; left: 0;"></i>
             <i class="fab fa-js floating-icon" style="bottom: 10%; right: 20%;"></i>
             <i class="fab fa-git-alt floating-icon" style="top: 30%; left: 10%;"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ESTADÍSTICAS DE GITHUB -->
+    <section id="github-stats">
+      <div class="github-stats-section fade-in-up">
+        <div class="section-header">
+          <span class="section-number">⚡</span>
+          <h2 class="section-title">Estadísticas de GitHub</h2>
+        </div>
+        <p class="section-description">Mis métricas de desarrollo en tiempo real</p>
+        
+        <div id="githubStats" class="stats-grid">
+          <div class="stat-loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Cargando estadísticas...</p>
+          </div>
+        </div>
+        
+        <!-- Lenguajes más utilizados -->
+        <div style="margin-top: 2rem;">
+          <h3 style="text-align: center; margin-bottom: 1rem;">Lenguajes más utilizados</h3>
+          <div id="languageStats" class="repo-languages">
+            <div class="stat-loading">
+              <i class="fas fa-spinner fa-spin"></i>
+              <p>Cargando lenguajes...</p>
+            </div>
           </div>
         </div>
       </div>
@@ -269,6 +296,91 @@
       </div>
 
       <div id="repos" class="cards-grid"></div>
+    </section>
+
+    <!-- SECCIÓN DE CONTACTO -->
+    <section id="contacto">
+      <div class="section-header fade-in-up">
+        <span class="section-number">05</span>
+        <h2 class="section-title">Contacto</h2>
+      </div>
+      <p class="section-description fade-in-up">¿Hablamos? Estoy disponible para colaboraciones y oportunidades</p>
+
+      <div class="contact-container">
+        <div class="contact-info fade-in-left">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-details">
+              <h4>Email</h4>
+              <a href="mailto:yasllanyan@gmail.com">yasllanyan@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="contact-details">
+              <h4>Ubicación</h4>
+              <p>Tenerife, Islas Canarias</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fab fa-github"></i>
+            </div>
+            <div class="contact-details">
+              <h4>GitHub</h4>
+              <a href="https://github.com/Lospro772" target="_blank">@Lospro772</a>
+            </div>
+          </div>
+
+          <div class="contact-social">
+            <a href="https://github.com/Lospro772" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="mailto:yasllanyan@gmail.com"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+
+        <div class="contact-form fade-in-right">
+          <!-- REEMPLAZA "TU_ID_AQUI" CON EL ID DE FORMSPREE -->
+          <!-- REEMPLAZA "TUDOMINIO.COM" CON TU DOMINIO REAL -->
+          <form id="contactForm" action="https://formspree.io/f/maqpojzl" method="POST">
+            <div class="form-group">
+              <label for="name">Nombre</label>
+              <input type="text" id="name" name="nombre" required placeholder="Tu nombre">
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required placeholder="tu@email.com">
+            </div>
+            <div class="form-group">
+              <label for="subject">Asunto</label>
+              <input type="text" id="subject" name="asunto" required placeholder="¿Sobre qué quieres hablar?">
+            </div>
+            <div class="form-group">
+              <label for="message">Mensaje</label>
+              <textarea id="message" name="mensaje" required placeholder="Escribe tu mensaje aquí..."></textarea>
+            </div>
+            <!-- Campo oculto para redirigir después del envío -->
+            <input type="hidden" name="_next" value="https://lospro772.github.io">
+            <input type="hidden" name="_subject" value="Nuevo mensaje desde tu portfolio">
+            <button type="submit" class="btn-submit">
+              <i class="fas fa-paper-plane"></i> Enviar mensaje
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <p>© 2025 Yasiel Llanos Yanes - Todos los derechos reservados</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+          <i class="fas fa-code"></i> Hecho con pasión desde Tenerife
+        </p>
+      </div>
     </section>
   </main>
 
@@ -449,6 +561,170 @@
       `).join('');
     }
 
+    // ===== ESTADÍSTICAS DE GITHUB =====
+    async function fetchGitHubStats() {
+      try {
+        const userRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
+        const userData = await userRes.json();
+        
+        const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`);
+        const repos = await reposRes.json();
+        
+        const totalStars = repos.reduce((acc, repo) => acc + repo.stargazers_count, 0);
+        const totalForks = repos.reduce((acc, repo) => acc + repo.forks_count, 0);
+        const totalWatchers = repos.reduce((acc, repo) => acc + repo.watchers_count, 0);
+        
+        const languages = {};
+        repos.forEach(repo => {
+          if (repo.language) {
+            languages[repo.language] = (languages[repo.language] || 0) + 1;
+          }
+        });
+        
+        const sortedLanguages = Object.entries(languages)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 8);
+        
+        return {
+          public_repos: userData.public_repos || 0,
+          followers: userData.followers || 0,
+          following: userData.following || 0,
+          total_stars: totalStars,
+          total_forks: totalForks,
+          total_watchers: totalWatchers,
+          languages: sortedLanguages
+        };
+      } catch (error) {
+        console.error('Error fetching GitHub stats:', error);
+        return null;
+      }
+    }
+
+    async function renderGitHubStats() {
+      const statsContainer = document.getElementById('githubStats');
+      const languageContainer = document.getElementById('languageStats');
+      
+      const stats = await fetchGitHubStats();
+      
+      if (!stats) {
+        statsContainer.innerHTML = `
+          <div class="stat-error">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>Error al cargar las estadísticas. Intenta de nuevo más tarde.</p>
+          </div>
+        `;
+        languageContainer.innerHTML = '';
+        return;
+      }
+      
+      statsContainer.innerHTML = `
+        <div class="stat-card">
+          <i class="fas fa-code-branch"></i>
+          <h3>${stats.public_repos}</h3>
+          <p>Repositorios públicos</p>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-star"></i>
+          <h3>${stats.total_stars}</h3>
+          <p>Estrellas totales</p>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-users"></i>
+          <h3>${stats.followers}</h3>
+          <p>Seguidores</p>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-code-fork"></i>
+          <h3>${stats.total_forks}</h3>
+          <p>Forks</p>
+        </div>
+      `;
+      
+      if (stats.languages.length > 0) {
+        languageContainer.innerHTML = stats.languages.map(([lang, count]) => `
+          <span class="lang-pill">${lang} (${count})</span>
+        `).join('');
+      } else {
+        languageContainer.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No hay datos de lenguajes</p>';
+      }
+    }
+
+    // ===== MANEJAR ENVÍO DEL FORMULARIO CON FORMSPREE =====
+    function initContactForm() {
+      const form = document.getElementById('contactForm');
+      
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        
+        // Validar campos
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value.trim();
+        const message = document.getElementById('message').value.trim();
+        
+        if (!name || !email || !subject || !message) {
+          alert('⚠️ Por favor, completa todos los campos');
+          return;
+        }
+        
+        if (!email.includes('@') || !email.includes('.')) {
+          alert('📧 Por favor, introduce un email válido');
+          return;
+        }
+        
+        // Cambiar estado del botón
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        submitBtn.disabled = true;
+        
+        // Recoger datos del formulario
+        const formData = new FormData(form);
+        
+        try {
+          // Enviar a Formspree
+          const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Accept': 'application/json'
+            }
+          });
+          
+          if (response.ok) {
+            // Éxito
+            submitBtn.innerHTML = '<i class="fas fa-check"></i> ¡Mensaje enviado!';
+            submitBtn.style.background = '#4CAF50';
+            form.reset();
+            
+            setTimeout(() => {
+              submitBtn.innerHTML = originalText;
+              submitBtn.style.background = '';
+              submitBtn.disabled = false;
+            }, 3000);
+          } else {
+            // Error del servidor
+            throw new Error('Error al enviar');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          
+          // Error
+          submitBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error al enviar';
+          submitBtn.style.background = '#f44336';
+          
+          setTimeout(() => {
+            submitBtn.innerHTML = originalText;
+            submitBtn.style.background = '';
+            submitBtn.disabled = false;
+          }, 3000);
+          
+          alert('Hubo un error. Puedes escribirme directamente a yasllanyan@gmail.com');
+        }
+      });
+    }
+
     // ===== INICIALIZACIÓN =====
     async function init() {
       initWelcomeAnimation();
@@ -458,6 +734,12 @@
       allRepos = await fetchRepos();
       renderFeatured(allRepos);
       renderRepos();
+      
+      // Cargar estadísticas de GitHub
+      await renderGitHubStats();
+
+      // Inicializar formulario de contacto
+      initContactForm();
 
       // Event listeners
       document.getElementById('q').addEventListener('input', renderRepos);
@@ -471,6 +753,9 @@
           renderRepos();
         });
       });
+      
+      // Actualizar estadísticas cada 5 minutos
+      setInterval(renderGitHubStats, 300000);
     }
 
     // Smooth scroll para los enlaces del menú
