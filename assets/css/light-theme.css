@@ -1,0 +1,17 @@
+:root {
+  /* Colores modo claro */
+  --bg-primary: #faf7f2;
+  --bg-secondary: #fff4e8;
+  --bg-card: #ffffff;
+  --menu-bg: rgba(255, 255, 255, 0.9);
+  --text-primary: #2d2d2d;
+  --text-secondary: #666666;
+  --accent-primary: #ff7b4a;
+  --accent-secondary: #ff5f30;
+  --accent-glow: rgba(255, 123, 74, 0.2);
+  --border-color: #ffe0d0;
+  --card-shadow: 0 10px 30px -10px rgba(255, 123, 74, 0.2);
+  --card-overlay: rgba(255, 123, 74, 0.05);
+  --badge-bg: rgba(255, 123, 74, 0.1);
+  --grid-color: rgba(255, 123, 74, 0.1);
+}

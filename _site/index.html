@@ -1,297 +1,497 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yasiel Llanos Yanes — CV & Repos</title>
-  <meta name="description" content="CV de Yasiel Llanos Yanes y repositorios destacados en GitHub." />
-  <link rel="stylesheet" href="/assets/css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yasiel Llanos Yanes | Portfolio & CV</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Estilos base (siempre se carga) -->
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <!-- Tema (cambia entre dark/light) -->
+  <link id="theme-style" rel="stylesheet" href="/assets/css/dark-theme.css">
 </head>
 <body>
-  <!-- ANIMACIÓN DE BIENVENIDA (SIEMPRE CON F5) -->
-<div id="welcome-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:var(--bg); z-index:9999; display:flex; justify-content:center; align-items:center; flex-direction:column; transition:opacity 1s ease;">
-  <div style="text-align:center; animation:fadeInUp 1s ease">
-    <h1 style="font-size:4rem; margin:0; color:var(--text);">👋 ¡Bienvenido!</h1>
-    <p style="font-size:1.5rem; color:var(--muted); margin-top:20px;">Yasiel Llanos Yanes - DAM</p>
-    <div style="width:50px; height:50px; border:3px solid var(--line); border-top-color:var(--brand); border-radius:50%; margin:30px auto; animation:spin 1s infinite linear;"></div>
+  <!-- Efectos de fondo -->
+  <div class="background-effects">
+    <div class="gradient-orb"></div>
+    <div class="gradient-orb-2"></div>
+    <div class="grid-pattern"></div>
   </div>
-</div>
 
-<style>
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-</style>
-
-<!-- LINK A TU CSS ORIGINAL (modo claro por defecto) -->
-<link id="theme-style" rel="stylesheet" type="text/css" href="assets/css/styles.css">
-
-<div class="container">
-  <header class="topbar">
-    <div>
-      <h1 class="title">Yasiel Llanos Yanes</h1>
-      <div class="subtitle">Estudiante de Desarrollo de Aplicaciones Multiplataforma (1º DAM)</div>
+  <!-- Overlay de bienvenida -->
+  <div id="welcome-overlay">
+    <div class="welcome-content">
+      <h1 class="welcome-title">¡Bienvenido!</h1>
+      <p class="welcome-subtitle">Yasiel Llanos Yanes - DAM</p>
+      <div class="welcome-spinner"></div>
     </div>
-    <nav style="display:flex;gap:10px">
-      <button id="themeToggle" class="btn" style="display:flex;align-items:center;gap:5px">
-        🌙
-      </button>
-      <a class="btn" href="https://www.linkedin.com" target="_blank">LinkedIn</a>
-      <a class="btn" href="https://github.com/Lospro772" target="_blank">GitHub</a>
-      <a class="btn" href="mailto:yasllanyan@gmail.com">Email</a>
-    </nav>
-  </header>
+  </div>
 
-  <section class="section">
-    <h2>Sobre mí</h2>
-    <div class="grid2">
-      <div class="profile">
-        <img src="assets/img/perfil.png" alt="Foto de perfil">
-        <div class="bio">
-          <p class="muted" style="margin:0">
-            Soy un estudiante de DAM motivado por aprender y mejorar continuamente mis habilidades de programación. Me gusta transformar ideas en aplicaciones funcionales.
+  <!-- Menú fijo -->
+  <nav class="fixed-menu">
+    <a href="#inicio">Inicio</a>
+    <a href="#sobre-mi">Sobre mí</a>
+    <a href="#trayectoria">Trayectoria</a>
+    <a href="#destacados">Destacados</a>
+    <a href="#repositorios">Repositorios</a>
+  </nav>
+
+  <!-- Botón tema -->
+  <div class="theme-toggle" id="themeToggle">
+    <i class="fas fa-sun" id="themeIcon"></i>
+    <span>Tema claro</span>
+  </div>
+
+  <main class="page-content">
+    <!-- HERO SECTION -->
+    <section id="inicio">
+      <div class="hero-grid">
+        <div class="hero-content fade-in-left">
+          <span class="hero-badge">🚀 Estudiante DAM</span>
+          <h1 class="hero-name">
+            Yasiel <span>Llanos</span><br>
+            Yanes
+          </h1>
+          <p class="hero-description">
+            Desarrollador en formación con pasión por crear aplicaciones funcionales y elegantes. Especializado en Java y tecnologías web.
           </p>
-          <div class="pillrow">
-            <span class="pill">Java</span>
-            <span class="pill">SQL</span>
-            <span class="pill">HTML/CSS</span>
-            <span class="pill">Git</span>
+          
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-number">+1</div>
+              <div class="stat-label">Proyectos</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">4</div>
+              <div class="stat-label">Tecnologías</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">1º</div>
+              <div class="stat-label">DAM</div>
+            </div>
+          </div>
+
+          <div class="tech-stack">
+            <span class="tech-pill">Java</span>
+            <span class="tech-pill">SQL</span>
+            <span class="tech-pill">HTML/CSS</span>
+            <span class="tech-pill">Git</span>
+            <span class="tech-pill">JavaScript</span>
+            <span class="tech-pill">PogrestSQL</span>
+          </div>
+
+          <div class="social-links">
+            <a href="https://github.com/Lospro772" target="_blank" class="btn btn-primary">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+            <!--<a href="https://linkedin.com" target="_blank" class="btn btn-outline">
+              <i class="fab fa-linkedin"></i> LinkedIn
+            </a>-->
+            <a href="mailto:yasllanyan@gmail.com" class="btn btn-outline">
+              <i class="fas fa-envelope"></i> Email
+            </a>
+          </div>
+        </div>
+
+        <div class="profile-image-container fade-in-right">
+          <div class="profile-frame">
+            <div class="profile-ring"></div>
+            <img src="/assets/img/perfil.png" alt="Yasiel Llanos" class="profile-image" onerror="this.src='https://via.placeholder.com/400x400?text=Yasiel+Llanos'">
+            <div class="profile-glow"></div>
+          </div>
+          <div class="floating-tech-icons">
+            <i class="fab fa-java floating-icon" style="top: 10%; right: 0;"></i>
+            <i class="fas fa-database floating-icon" style="bottom: 20%; left: 0;"></i>
+            <i class="fab fa-js floating-icon" style="bottom: 10%; right: 20%;"></i>
+            <i class="fab fa-git-alt floating-icon" style="top: 30%; left: 10%;"></i>
           </div>
         </div>
       </div>
+    </section>
 
-      <div>
-        <h3 style="margin:0 0 10px">Experiencia / Proyectos de clase</h3>
-        <ul class="muted" style="margin:0;padding-left:18px">
-          <li>Proyecto DAM: "App de Notas" (CRUD + BBDD)</li>
-          <li>Proyecto Java: "Gestor de tareas" (POO + tests)</li>
-        </ul>
-
-        <h3 style="margin:16px 0 10px">Objetivo</h3>
-        <p class="muted" style="margin:0">
-          Busco prácticas y mejorar en backend con Java/Spring y bases de datos.
-        </p>
+    <!-- SOBRE MÍ SECTION -->
+    <section id="sobre-mi">
+      <div class="section-header fade-in-up">
+        <span class="section-number">01</span>
+        <h2 class="section-title">Sobre mí</h2>
       </div>
-    </div>
-  </section>
 
-  <section class="section">
-    <h2>Proyectos destacados (topic: <code>showcase</code>)</h2>
-    <div id="featured" class="cards"></div>
-    <p class="muted" style="margin:10px 0 0">
-      Para que un repo salga aquí, añade el topic <b>showcase</b> en GitHub.
-    </p>
-  </section>
+      <div class="cards-grid">
+        <div class="feature-card fade-in-up" style="animation-delay: 0.1s">
+          <div class="card-icon">
+            <i class="fas fa-user-graduate"></i>
+          </div>
+          <h3>Formación</h3>
+          <p>Estudiante de 1º de Desarrollo de Aplicaciones Multiplataforma (DAM) con interés en el desarrollo backend y la creación de soluciones robustas.</p>
+          <div class="card-meta">
+            <span>2025-2026 - Actualidad</span>
+            <span>IES Puerto de la Cruz Telesforo Bravo</span>
+          </div>
+        </div>
 
-  <section class="section">
-    <h2>Mis repositorios</h2>
-    <div class="toolbar">
-      <input id="q" class="input" placeholder="Buscar repositorios..." />
-      <select id="sort" class="select">
-        <option value="updated">Ordenar: actividad reciente</option>
-        <option value="stars">Ordenar: estrellas</option>
-        <option value="name">Ordenar: nombre</option>
-      </select>
-      <button class="btn active" data-topic="all">Todos</button>
-      <button class="btn" data-topic="showcase">showcase</button>
-      <button class="btn" data-topic="web">web</button>
-      <button class="btn" data-topic="backend">backend</button>
-    </div>
+        <div class="feature-card fade-in-up" style="animation-delay: 0.2s">
+          <div class="card-icon">
+            <i class="fas fa-code"></i>
+          </div>
+          <h3>Objetivos</h3>
+          <p>Especializarme en Java y Spring Boot, contribuir a proyectos open source y desarrollar aplicaciones que resuelvan problemas reales.</p>
+          <div class="card-meta">
+            <span>Backend</span>
+            <span>Arquitectura</span>
+          </div>
+        </div>
 
-    <div style="height:12px"></div>
-    <div id="repos" class="cards"></div>
-  </section>
-</div>
+        <div class="feature-card fade-in-up" style="animation-delay: 0.3s">
+          <div class="card-icon">
+            <i class="fas fa-heart"></i>
+          </div>
+          <h3>Intereses</h3>
+          <p>Además de la programación, me apasiona la música, el deporte y aprender nuevas tecnologías que me permitan crecer profesionalmente.</p>
+          <div class="card-meta">
+            <span>🎸 Música</span>
+            <span>⚽ Deporte</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<script>
-  const GITHUB_USERNAME = "Lospro772";
-  const FEATURED_TOPIC = "showcase";
-  let allRepos = [];
-  let activeTopic = "all";
+    <!-- TRAYECTORIA EDUCATIVA SECTION -->
+    <section id="trayectoria">
+      <div class="section-header fade-in-up">
+        <span class="section-number">02</span>
+        <h2 class="section-title">Mi trayectoria</h2>
+      </div>
+      <p class="section-description fade-in-up">Mi evolución académica y profesional a lo largo de los años</p>
 
-  // ===== ANIMACIÓN DE BIENVENIDA (SIEMPRE CON F5) =====
-  function initWelcomeAnimation() {
-    const welcomeOverlay = document.getElementById('welcome-overlay');
-    
-    // Mostrar animación siempre
-    welcomeOverlay.style.display = 'flex';
-    welcomeOverlay.style.opacity = '1';
-    
-    // Ocultar después de 2.5 segundos
-    setTimeout(() => {
-      welcomeOverlay.style.opacity = '0';
-      setTimeout(() => {
-        welcomeOverlay.style.display = 'none';
-      }, 1000);
-    }, 2500);
-  }
+      <div class="timeline-container">
+        <!-- Línea de tiempo vertical -->
+        <div class="timeline">
+          <!-- 2024 - Actualidad -->
+          <div class="timeline-item fade-in-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">2024 - Presente</div>
+              <div class="timeline-title">
+                <i class="fas fa-graduation-cap"></i>
+                Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)
+              </div>
+              <div class="timeline-subtitle">IES Puerto de la Cruz Telesforo Bravo</div>
+              <p class="timeline-description">
+                Actualmente cursando primer año, aprendiendo Java, SQL, programación estructurada y orientada a objetos, 
+                desarrollo de interfaces y bases de datos.
+              </p>
+              <div class="timeline-tags">
+                <span class="tag">Java</span>
+                <span class="tag">SQL</span>
+                <span class="tag">POO</span>
+                <span class="tag">Git</span>
+              </div>
+            </div>
+          </div>
 
-  // ===== MODO OSCURO CON ARCHIVOS EXTERNOS =====
-  function initThemeSwitcher() {
-    const themeToggle = document.getElementById('themeToggle');
-    const themeStyle = document.getElementById('theme-style');
-    
-    if (!themeToggle || !themeStyle) return;
-    
-    // Comprobar tema guardado
-    const darkMode = localStorage.getItem('darkMode') === 'true';
-    
-    // Aplicar tema inicial
-    if (darkMode) {
-      themeStyle.href = 'assets/css/style-dark.css';
-      themeToggle.textContent = '☀️';
-    } else {
-      themeStyle.href = 'assets/css/styles.css';
-      themeToggle.textContent = '🌙';
-    }
-    
-    // Evento del botón
-    themeToggle.addEventListener('click', function() {
-      const isDarkMode = themeToggle.textContent === '🌙';
+          <div class="timeline-item fade-in-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">2023 - 2025</div>
+              <div class="timeline-title">
+                <i class="fas fa-school"></i>
+                Bachillerato Tecnológico
+              </div>
+              <div class="timeline-subtitle">IES Mencey Bencomo</div>
+              <p class="timeline-description">
+                Bachillerato con orientación tecnológica, donde adquirí bases en matemáticas,
+                tecnología, despertando mi interés por el mundo del desarrollo software.
+              </p>
+              <div class="timeline-tags">
+                <span class="tag">Matemáticas</span>
+                <span class="tag">Tecnología</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item fade-in-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <div class="timeline-date">2019 - 2023</div>
+              <div class="timeline-title">
+                <i class="fas fa-book"></i>
+                Educación Secundaria Obligatoria (ESO)
+              </div>
+              <div class="timeline-subtitle">Colegio Nazaret Los Realejos</div>
+              <p class="timeline-description">
+                Primeros contactos con la informática y la tecnología, participando en talleres de robótica 
+                y actividades extraescolares relacionadas con la programación.
+              </p>
+              <div class="timeline-tags">
+                <span class="tag">Informática básica</span>
+                <span class="tag">Robótica</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESTACADOS SECTION -->
+    <section id="destacados">
+      <div class="section-header fade-in-up">
+        <span class="section-number">03</span>
+        <h2 class="section-title">Proyectos destacados</h2>
+      </div>
+      <p class="section-description fade-in-up">
+        Repositorios con topic <strong>"showcase"</strong> en GitHub
+      </p>
+      <div id="featured" class="cards-grid"></div>
+    </section>
+
+    <!-- REPOSITORIOS SECTION -->
+    <section id="repositorios">
+      <div class="section-header fade-in-up">
+        <span class="section-number">04</span>
+        <h2 class="section-title">Repositorios</h2>
+      </div>
+
+      <div class="toolbar fade-in-up">
+        <input id="q" class="input" placeholder="🔍 Buscar repositorios..." />
+        <select id="sort" class="select">
+          <option value="updated">📅 Más recientes</option>
+          <option value="stars">⭐ Más estrellas</option>
+          <option value="name">📝 Orden alfabético</option>
+        </select>
+        <button class="btn active" data-topic="all">Todos</button>
+        <button class="btn" data-topic="showcase">🌟 Showcase</button>
+        <button class="btn" data-topic="web">🌐 Web</button>
+        <button class="btn" data-topic="backend">⚙️ Backend</button>
+      </div>
+
+      <div id="repos" class="cards-grid"></div>
+    </section>
+  </main>
+
+  <script>
+    const GITHUB_USERNAME = "Lospro772";
+    const FEATURED_TOPIC = "showcase";
+    let allRepos = [];
+    let activeTopic = "all";
+
+    // ===== ANIMACIÓN DE BIENVENIDA =====
+    function initWelcomeAnimation() {
+      const overlay = document.getElementById('welcome-overlay');
       
-      if (isDarkMode) {
-        themeStyle.href = 'assets/css/style-dark.css';
-        themeToggle.textContent = '☀️';
-        localStorage.setItem('darkMode', 'true');
-      } else {
-        themeStyle.href = 'assets/css/styles.css';
-        themeToggle.textContent = '🌙';
-        localStorage.setItem('darkMode', 'false');
+      setTimeout(() => {
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 1000);
+      }, 2500);
+    }
+
+    // ===== MODO OSCURO/CLARO =====
+    function initTheme() {
+      const themeStyle = document.getElementById('theme-style');
+      const themeIcon = document.getElementById('themeIcon');
+      const themeToggle = document.getElementById('themeToggle');
+      
+      // Forzar modo oscuro al inicio
+      themeStyle.href = '/assets/css/dark-theme.css';
+      themeIcon.className = 'fas fa-sun';
+      themeToggle.querySelector('span').textContent = 'Tema claro';
+      localStorage.setItem('theme', 'dark');
+
+      themeToggle.addEventListener('click', () => {
+        const isDark = themeStyle.href.includes('dark');
+        
+        if (isDark) {
+          themeStyle.href = '/assets/css/light-theme.css';
+          themeIcon.className = 'fas fa-moon';
+          themeToggle.querySelector('span').textContent = 'Tema oscuro';
+          localStorage.setItem('theme', 'light');
+        } else {
+          themeStyle.href = '/assets/css/dark-theme.css';
+          themeIcon.className = 'fas fa-sun';
+          themeToggle.querySelector('span').textContent = 'Tema claro';
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+    }
+
+    // ===== FUNCIONES GITHUB =====
+    function formatDate(iso) {
+      return new Date(iso).toLocaleDateString('es-ES', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      });
+    }
+
+    async function fetchRepos() {
+      try {
+        const res = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`);
+        if (!res.ok) throw new Error('Error al cargar repositorios');
+        
+        const repos = await res.json();
+        return repos.map(r => ({
+          name: r.name,
+          html_url: r.html_url,
+          description: r.description || 'Sin descripción',
+          language: r.language || '📁',
+          stargazers_count: r.stargazers_count || 0,
+          updated_at: r.updated_at,
+          topics: r.topics || []
+        }));
+      } catch (error) {
+        console.error('Error:', error);
+        return [];
       }
-    });
-  }
+    }
 
-  function formatDate(iso){
-    const d = new Date(iso);
-    return d.toLocaleDateString("es-ES", {year:"numeric", month:"short", day:"2-digit"});
-  }
-  
-  function cardBorderByIndex(i){
-    return ["border-blue","border-violet","border-emerald"][i % 3];
-  }
-
-  async function fetchRepos(){
-    const url = `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`;
-    const res = await fetch(url, { headers: { "Accept":"application/vnd.github+json" }});
-    if(!res.ok) throw new Error("No se pudo leer la API de GitHub. Revisa tu usuario.");
-    const repos = await res.json();
-    return repos.map(r => ({
-      name: r.name,
-      html_url: r.html_url,
-      description: r.description || "",
-      language: r.language || "—",
-      stargazers_count: r.stargazers_count || 0,
-      updated_at: r.updated_at,
-      topics: r.topics || []
-    }));
-  }
-
-  function renderFeatured(repos){
-    const featured = repos.filter(r => r.topics.includes(FEATURED_TOPIC)).slice(0, 6);
-    const el = document.getElementById("featured");
-    el.innerHTML = featured.length ? "" : `<div class="muted">Aún no tienes repos con topic <b>${FEATURED_TOPIC}</b>.</div>`;
-
-    featured.forEach((r, i) => {
-      const topics = r.topics.slice(0, 4).map(t => `<span class="pill">${t}</span>`).join("");
-      el.insertAdjacentHTML("beforeend", `
-        <article class="card ${cardBorderByIndex(i)}">
-          <h3>${r.name}</h3>
-          <div class="muted">${r.description || "Sin descripción (añádela en GitHub 😉)"}</div>
-          <div class="pillrow">
-            <span class="pill featured">Featured</span>
-            ${topics}
+    function renderFeatured(repos) {
+      const featured = repos.filter(r => r.topics.includes(FEATURED_TOPIC)).slice(0, 6);
+      const container = document.getElementById('featured');
+      
+      if (featured.length === 0) {
+        container.innerHTML = `
+          <div class="feature-card" style="grid-column: 1/-1; text-align: center;">
+            <i class="fas fa-folder-open" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
+            <h3>No hay repositorios destacados</h3>
+            <p>Añade el topic "${FEATURED_TOPIC}" a tus repositorios de GitHub para que aparezcan aquí</p>
           </div>
-          <div class="repoMeta">
-            <span>⭐ ${r.stargazers_count}</span>
-            <span>🧩 ${r.language}</span>
-            <span>🕒 ${formatDate(r.updated_at)}</span>
+        `;
+        return;
+      }
+
+      container.innerHTML = featured.map(repo => `
+        <div class="feature-card">
+          <div class="card-icon">
+            <i class="fas fa-star"></i>
           </div>
-          <a class="btn" href="${r.html_url}" target="_blank" rel="noreferrer">Ver repo</a>
-        </article>
-      `);
-    });
-  }
-
-  function applyFilters(repos){
-    const q = (document.getElementById("q").value || "").toLowerCase();
-    const sort = document.getElementById("sort").value;
-
-    let out = repos.filter(r => {
-      const matchesText = r.name.toLowerCase().includes(q) || (r.description||"").toLowerCase().includes(q);
-      const matchesTopic = activeTopic === "all" ? true : r.topics.includes(activeTopic);
-      return matchesText && matchesTopic;
-    });
-
-    if (sort === "updated") out.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
-    if (sort === "stars") out.sort((a,b) => (b.stargazers_count||0) - (a.stargazers_count||0));
-    if (sort === "name") out.sort((a,b) => a.name.localeCompare(b.name));
-    return out;
-  }
-
-  function renderRepos(repos){
-    const el = document.getElementById("repos");
-    const list = applyFilters(repos);
-    el.innerHTML = list.length ? "" : `<div class="muted">No hay resultados con esos filtros.</div>`;
-
-    list.forEach((r, i) => {
-      const topics = (r.topics && r.topics.length)
-        ? r.topics.slice(0, 6).map(t => `<span class="pill">${t}</span>`).join("")
-        : `<span class="pill">sin topics</span>`;
-
-      el.insertAdjacentHTML("beforeend", `
-        <article class="card ${cardBorderByIndex(i)}">
-          <h3>${r.name}</h3>
-          <div class="muted">${r.description || "Sin descripción"}</div>
-          <div class="pillrow">${topics}</div>
-          <div class="repoMeta">
-            <span>⭐ ${r.stargazers_count}</span>
-            <span>🧩 ${r.language}</span>
-            <span>🕒 ${formatDate(r.updated_at)}</span>
+          <h3>${repo.name}</h3>
+          <p>${repo.description}</p>
+          <div class="card-meta">
+            <span><i class="fas fa-code"></i> ${repo.language}</span>
+            <span><i class="fas fa-star"></i> ${repo.stargazers_count}</span>
+            <span><i class="fas fa-calendar"></i> ${formatDate(repo.updated_at)}</span>
           </div>
-          <a class="btn" href="${r.html_url}" target="_blank" rel="noreferrer">Abrir</a>
-        </article>
-      `);
-    });
-  }
+          <div style="margin-top: 1rem;">
+            ${repo.topics.slice(0, 3).map(t => `<span class="tech-pill" style="font-size: 0.8rem;">${t}</span>`).join('')}
+          </div>
+          <a href="${repo.html_url}" target="_blank" class="btn btn-outline" style="margin-top: 1.5rem; width: 100%; justify-content: center;">
+            <i class="fab fa-github"></i> Ver repositorio
+          </a>
+        </div>
+      `).join('');
+    }
 
-  function bindUI(){
-    document.getElementById("q").addEventListener("input", () => renderRepos(allRepos));
-    document.getElementById("sort").addEventListener("change", () => renderRepos(allRepos));
-    document.querySelectorAll(".btn[data-topic]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll(".btn[data-topic]").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        activeTopic = btn.dataset.topic;
-        renderRepos(allRepos);
+    function filterAndSortRepos(repos) {
+      const searchTerm = document.getElementById('q').value.toLowerCase();
+      const sortBy = document.getElementById('sort').value;
+
+      let filtered = repos.filter(repo => {
+        const matchesSearch = repo.name.toLowerCase().includes(searchTerm) || 
+                             (repo.description && repo.description.toLowerCase().includes(searchTerm));
+        const matchesTopic = activeTopic === 'all' || repo.topics.includes(activeTopic);
+        return matchesSearch && matchesTopic;
+      });
+
+      switch(sortBy) {
+        case 'updated':
+          filtered.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+          break;
+        case 'stars':
+          filtered.sort((a, b) => b.stargazers_count - a.stargazers_count);
+          break;
+        case 'name':
+          filtered.sort((a, b) => a.name.localeCompare(b.name));
+          break;
+      }
+
+      return filtered;
+    }
+
+    function renderRepos() {
+      const container = document.getElementById('repos');
+      const filtered = filterAndSortRepos(allRepos);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="feature-card" style="grid-column: 1/-1; text-align: center;">
+            <i class="fas fa-search" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
+            <h3>No se encontraron repositorios</h3>
+            <p>Prueba con otros filtros o términos de búsqueda</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(repo => `
+        <div class="feature-card">
+          <div class="card-icon">
+            <i class="fas fa-code-branch"></i>
+          </div>
+          <h3>${repo.name}</h3>
+          <p>${repo.description}</p>
+          <div class="card-meta">
+            <span><i class="fas fa-code"></i> ${repo.language}</span>
+            <span><i class="fas fa-star"></i> ${repo.stargazers_count}</span>
+            <span><i class="fas fa-calendar"></i> ${formatDate(repo.updated_at)}</span>
+          </div>
+          <div style="margin-top: 1rem;">
+            ${repo.topics.map(t => `<span class="tech-pill" style="font-size: 0.8rem;">${t}</span>`).join('')}
+          </div>
+          <a href="${repo.html_url}" target="_blank" class="btn btn-outline" style="margin-top: 1.5rem; width: 100%; justify-content: center;">
+            <i class="fab fa-github"></i> Ver código
+          </a>
+        </div>
+      `).join('');
+    }
+
+    // ===== INICIALIZACIÓN =====
+    async function init() {
+      initWelcomeAnimation();
+      initTheme();
+
+      // Cargar repositorios
+      allRepos = await fetchRepos();
+      renderFeatured(allRepos);
+      renderRepos();
+
+      // Event listeners
+      document.getElementById('q').addEventListener('input', renderRepos);
+      document.getElementById('sort').addEventListener('change', renderRepos);
+      
+      document.querySelectorAll('[data-topic]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll('[data-topic]').forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+          activeTopic = e.target.dataset.topic;
+          renderRepos();
+        });
+      });
+    }
+
+    // Smooth scroll para los enlaces del menú
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
       });
     });
-  }
 
-  async function main(){
-    bindUI();
-    initWelcomeAnimation(); // Animación siempre con F5
-    initThemeSwitcher();    // Modo oscuro con archivos externos
-    allRepos = await fetchRepos();
-    renderFeatured(allRepos);
-    renderRepos(allRepos);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', main);
-  } else {
-    main();
-  }
-</script>
+    // Ejecutar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>
 </body>
 </html>

@@ -1,0 +1,17 @@
+:root {
+  /* Colores modo oscuro */
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #1a1a1a;
+  --bg-card: #1e1e1e;
+  --menu-bg: rgba(30, 30, 30, 0.8);
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --accent-primary: #ff8a5c;
+  --accent-secondary: #ff6b4a;
+  --accent-glow: rgba(255, 138, 92, 0.3);
+  --border-color: #333333;
+  --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  --card-overlay: rgba(255, 138, 92, 0.1);
+  --badge-bg: rgba(255, 138, 92, 0.1);
+  --grid-color: rgba(255, 138, 92, 0.05);
+}
