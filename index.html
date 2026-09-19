@@ -5,6 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yasiel Llanos Yanes | Portfolio & CV</title>
   
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Portafolio de Yasiel Llanos Yanes - Estudiante de 2º DAM (Desarrollo de Aplicaciones Multiplataforma). Especializado en desarrollo backend con Java, Spring Boot, SQL y aplicaciones multiplataforma. Disponible para prácticas FCT / Dual.">
+  <meta name="keywords" content="Yasiel Llanos Yanes, Yasiel Llanos, Desarrollador DAM, Java, Spring Boot, PostgreSQL, Android, Desarrollo Multiplataforma, FCT, FP Dual, Tenerife, Canarias">
+  <meta name="author" content="Yasiel Llanos Yanes">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0f0f0f">
+
+  <!-- Open Graph / Facebook / WhatsApp / LinkedIn -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lospro772.github.io/">
+  <meta property="og:title" content="Yasiel Llanos Yanes | Desarrollador Multiplataforma · 2º DAM">
+  <meta property="og:description" content="Portafolio y proyectos de desarrollo software, backend con Java/Spring Boot y aplicaciones multiplataforma. Disponible para prácticas FCT / Dual.">
+  <meta property="og:image" content="https://lospro772.github.io/assets/img/perfil.png">
+  <meta property="og:image:alt" content="Yasiel Llanos Yanes">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Yasiel Llanos Yanes | Desarrollador Multiplataforma · 2º DAM">
+  <meta name="twitter:description" content="Portafolio y proyectos de desarrollo software, backend con Java/Spring Boot y aplicaciones multiplataforma. Disponible para prácticas FCT / Dual.">
+  <meta name="twitter:image" content="https://lospro772.github.io/assets/img/perfil.png">
+
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,7 +35,7 @@
   <link rel="shortcut icon" href="assets/img/favicon.svg">
   
   <!-- Estilos base (siempre se carga) -->
-  <link rel="stylesheet" href="assets/css/base.css?v=5">
+  <link rel="stylesheet" href="assets/css/base.css?v=6">
   <!-- Tema (cambia entre dark/light) -->
   <link id="theme-style" rel="stylesheet" href="assets/css/dark-theme.css">
   
@@ -1084,10 +1105,11 @@
         return;
       }
 
-      container.innerHTML = featured.map(repo => {
+      container.innerHTML = featured.map((repo, idx) => {
         const langColor = LANGUAGE_COLORS[repo.language] || 'var(--accent-primary)';
+        const delay = Math.min(idx * 0.05, 0.3);
         return `
-        <div class="feature-card">
+        <div class="feature-card repo-card-animate" style="animation-delay: ${delay}s;">
           <div class="card-header">
             <div class="card-icon" style="margin-bottom: 0;">
               <i class="fas fa-star"></i>
@@ -1157,10 +1179,11 @@
         return;
       }
 
-      container.innerHTML = filtered.map(repo => {
+      container.innerHTML = filtered.map((repo, idx) => {
         const langColor = LANGUAGE_COLORS[repo.language] || 'var(--accent-primary)';
+        const delay = Math.min(idx * 0.04, 0.35);
         return `
-        <div class="feature-card">
+        <div class="feature-card repo-card-animate" style="animation-delay: ${delay}s;">
           <div class="card-icon">
             <i class="fas fa-code-branch"></i>
           </div>
