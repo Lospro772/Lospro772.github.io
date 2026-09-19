@@ -981,6 +981,7 @@
         </div>
       `;
       }).join('');
+      initSpotlightCards();
     }
 
     function filterAndSortRepos(repos) {
@@ -1050,6 +1051,7 @@
         </div>
       `;
       }).join('');
+      initSpotlightCards();
     }
 
     function renderGitHubStats(stats) {
@@ -1100,6 +1102,7 @@
           languageContainer.innerHTML = `<p style="text-align: center; color: var(--text-secondary);">${t('stats.noLanguages')}</p>`;
         }
       }
+      initSpotlightCards();
     }
 
     // ===== MENSAJES DE ESTADO DEL FORMULARIO =====
@@ -1211,6 +1214,9 @@
       // Inicializar formulario de contacto
       initContactForm();
 
+      // Inicializar spotlight y tilt 3D en las tarjetas
+      initSpotlightCards();
+
       // Inicializar scrollspy y scroll-to-top
       initScrollspy();
       initScrollToTop();
@@ -1227,6 +1233,58 @@
           e.target.classList.add('active');
           activeTopic = e.target.dataset.topic;
           renderRepos();
+        });
+      });
+    }
+
+    // ===== EFECTO SPOTLIGHT & 3D TILT EN TARJETAS =====
+    function initSpotlightCards() {
+      const isTouch = window.matchMedia('(hover: none)').matches || 'ontouchstart' in window;
+      const cards = document.querySelectorAll('.feature-card, .skill-category-card, .focus-item, .stat-card, .github-languages-panel');
+
+      cards.forEach(card => {
+        if (card.dataset.spotlightInitialized) return;
+        card.dataset.spotlightInitialized = 'true';
+        card.classList.add('spotlight-card');
+
+        let isHovered = false;
+        let animationFrame = null;
+
+        card.addEventListener('mouseenter', () => {
+          isHovered = true;
+        });
+
+        card.addEventListener('mousemove', (e) => {
+          if (!isHovered) return;
+
+          if (animationFrame) cancelAnimationFrame(animationFrame);
+
+          animationFrame = requestAnimationFrame(() => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+
+            if (!isTouch) {
+              const centerX = rect.width / 2;
+              const centerY = rect.height / 2;
+              const rotateX = ((y - centerY) / centerY) * -5;
+              const rotateY = ((x - centerX) / centerX) * 5;
+
+              card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-5px)`;
+            }
+          });
+        });
+
+        card.addEventListener('mouseleave', () => {
+          isHovered = false;
+          if (animationFrame) cancelAnimationFrame(animationFrame);
+
+          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+          card.style.removeProperty('--mouse-x');
+          card.style.removeProperty('--mouse-y');
         });
       });
     }
