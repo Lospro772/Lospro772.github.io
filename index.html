@@ -14,7 +14,7 @@
   <link rel="shortcut icon" href="assets/img/favicon.svg">
   
   <!-- Estilos base (siempre se carga) -->
-  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/base.css?v=2">
   <!-- Tema (cambia entre dark/light) -->
   <link id="theme-style" rel="stylesheet" href="assets/css/dark-theme.css">
   
@@ -220,47 +220,91 @@
       </div>
     </section>
 
-    <!-- SOBRE MÍ SECTION -->
+    <!-- SOBRE MÍ SECTION (BENTO GRID) -->
     <section id="sobre-mi">
       <div class="section-header fade-in-up">
         <span class="section-number">02</span>
         <h2 class="section-title" data-i18n="about.title">Sobre mí</h2>
       </div>
+      <p class="section-description fade-in-up" data-i18n="about.desc">Conoce más sobre mi perfil, enfoque técnico y principios de desarrollo</p>
 
-      <div class="cards-grid">
-        <div class="feature-card fade-in-up" style="animation-delay: 0.1s">
-          <div class="card-icon">
-            <i class="fas fa-user-graduate"></i>
+      <div class="bento-grid">
+        <!-- 1. Tarjeta Principal (Formación y Enfoque) - 2 columnas -->
+        <div class="bento-card bento-card-main fade-in-up">
+          <div class="bento-header">
+            <span class="bento-badge" data-i18n="about.bento1.badge"><i class="fas fa-graduation-cap"></i> 2º DAM · Desarrollo Multiplataforma</span>
           </div>
-          <h3 data-i18n="about.card1.title">Formación</h3>
-          <p data-i18n="about.card1.desc">Estudiante de 2º de Desarrollo de Aplicaciones Multiplataforma (DAM) con interés en el desarrollo backend y la creación de soluciones robustas.</p>
-          <div class="card-meta">
-            <span data-i18n="about.card1.meta1">2025-2026 - Actualidad</span>
-            <span>IES Puerto de la Cruz Telesforo Bravo</span>
+          <h3 data-i18n="about.bento1.title">Formación y Enfoque Backend</h3>
+          <p data-i18n="about.bento1.desc">
+            Estudiante de 2º de Desarrollo de Aplicaciones Multiplataforma en el IES Puerto de la Cruz Telesforo Bravo. Especial interés en lógica de negocio robusta, APIs REST, servicios concurrentes y acceso eficiente a bases de datos relacionales.
+          </p>
+          <div class="bento-pills">
+            <span class="tech-pill" data-i18n="about.bento1.pill1">Java SE / EE</span>
+            <span class="tech-pill" data-i18n="about.bento1.pill2">Spring Boot</span>
+            <span class="tech-pill" data-i18n="about.bento1.pill3">PostgreSQL</span>
+            <span class="tech-pill" data-i18n="about.bento1.pill4">Clean Architecture</span>
           </div>
         </div>
 
-        <div class="feature-card fade-in-up" style="animation-delay: 0.2s">
-          <div class="card-icon">
-            <i class="fas fa-code"></i>
+        <!-- 2. Tarjeta Ubicación y Reloj en Vivo -->
+        <div class="bento-card bento-card-clock fade-in-up" style="animation-delay: 0.1s">
+          <div class="bento-header">
+            <span class="bento-badge"><i class="fas fa-map-marker-alt"></i> <span data-i18n="about.bento2.loc">Tenerife, Islas Canarias</span></span>
           </div>
-          <h3 data-i18n="about.card2.title">Objetivos</h3>
-          <p data-i18n="about.card2.desc">Especializarme en Java y Spring Boot, contribuir a proyectos open source y desarrollar aplicaciones que resuelvan problemas reales.</p>
-          <div class="card-meta">
-            <span>Backend</span>
-            <span data-i18n="about.card2.meta2">Arquitectura</span>
+          <div class="live-clock-container">
+            <div class="live-clock" id="liveClock">--:--:--</div>
+            <div class="clock-label">
+              <span class="pulse-dot"></span>
+              <span data-i18n="about.bento2.badge">Hora local (UTC+0 / WET)</span>
+            </div>
+          </div>
+          <div class="clock-footer">
+            <span class="badge-status-pill" data-i18n="about.bento2.status">🟢 Disponible para FCT / Prácticas</span>
           </div>
         </div>
 
-        <div class="feature-card fade-in-up" style="animation-delay: 0.3s">
-          <div class="card-icon">
-            <i class="fas fa-check-double"></i>
+        <!-- 3. Tarjeta Enfoque Actual -->
+        <div class="bento-card bento-card-focus fade-in-up" style="animation-delay: 0.2s">
+          <div class="bento-header">
+            <span class="bento-badge"><i class="fas fa-compass"></i> <span data-i18n="about.bento3.title">Explorando Ahora</span></span>
           </div>
-          <h3 data-i18n="about.card3.title">Metodología y Valores</h3>
-          <p data-i18n="about.card3.desc">Compromiso con el código limpio (Clean Code), patrones de diseño escalables, trabajo colaborativo con Git y aprendizaje continuo de nuevas arquitecturas.</p>
-          <div class="card-meta">
-            <span>Clean Code</span>
-            <span data-i18n="about.card3.meta2">Trabajo en equipo</span>
+          <ul class="bento-focus-list">
+            <li>
+              <i class="fas fa-chevron-right"></i>
+              <span data-i18n="about.bento3.item1">Spring Boot 3 & Security</span>
+            </li>
+            <li>
+              <i class="fas fa-chevron-right"></i>
+              <span data-i18n="about.bento3.item2">Docker & Contenedores</span>
+            </li>
+            <li>
+              <i class="fas fa-chevron-right"></i>
+              <span data-i18n="about.bento3.item3">Optimización de consultas SQL</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 4. Tarjeta Metodología & Valores (2 columnas) -->
+        <div class="bento-card bento-card-values fade-in-up" style="animation-delay: 0.3s">
+          <div class="bento-header">
+            <span class="bento-badge"><i class="fas fa-shield-alt"></i> <span data-i18n="about.bento4.title">Metodología y Valores</span></span>
+          </div>
+          <div class="bento-pillars-grid">
+            <div class="pillar-box">
+              <i class="fas fa-code"></i>
+              <strong data-i18n="about.bento4.card1.title">Clean Code & SOLID</strong>
+              <p data-i18n="about.bento4.card1.desc">Código autodocumentado, modular y fácil de mantener.</p>
+            </div>
+            <div class="pillar-box">
+              <i class="fab fa-git-alt"></i>
+              <strong data-i18n="about.bento4.card2.title">Git & Flujo Ágil</strong>
+              <p data-i18n="about.bento4.card2.desc">Commits atómicos, ramas claras y control de versiones riguroso.</p>
+            </div>
+            <div class="pillar-box">
+              <i class="fas fa-lightbulb"></i>
+              <strong data-i18n="about.bento4.card3.title">Resolución Eficiente</strong>
+              <p data-i18n="about.bento4.card3.desc">Análisis crítico de problemas antes de escribir la primera línea.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -543,15 +587,28 @@
         'skills.langTitle': 'Lenguajes detectados en mis repositorios',
         'skills.loading': 'Cargando lenguajes...',
         'about.title': 'Sobre mí',
-        'about.card1.title': 'Formación',
-        'about.card1.desc': 'Estudiante de 2º de Desarrollo de Aplicaciones Multiplataforma (DAM) con interés en el desarrollo backend y la creación de soluciones robustas.',
-        'about.card1.meta1': '2025-2026 - Actualidad',
-        'about.card2.title': 'Objetivos',
-        'about.card2.desc': 'Especializarme en Java y Spring Boot, contribuir a proyectos open source y desarrollar aplicaciones que resuelvan problemas reales.',
-        'about.card2.meta2': 'Arquitectura',
-        'about.card3.title': 'Metodología y Valores',
-        'about.card3.desc': 'Compromiso con el código limpio (Clean Code), patrones de diseño escalables, trabajo colaborativo con Git y aprendizaje continuo de nuevas arquitecturas.',
-        'about.card3.meta2': 'Trabajo en equipo',
+        'about.desc': 'Conoce más sobre mi perfil, enfoque técnico y principios de desarrollo',
+        'about.bento1.badge': '<i class="fas fa-graduation-cap"></i> 2º DAM · Desarrollo Multiplataforma',
+        'about.bento1.title': 'Formación y Enfoque Backend',
+        'about.bento1.desc': 'Estudiante de 2º de Desarrollo de Aplicaciones Multiplataforma en el IES Puerto de la Cruz Telesforo Bravo. Especial interés en lógica de negocio robusta, APIs REST, servicios concurrentes y acceso eficiente a bases de datos relacionales.',
+        'about.bento1.pill1': 'Java SE / EE',
+        'about.bento1.pill2': 'Spring Boot',
+        'about.bento1.pill3': 'PostgreSQL',
+        'about.bento1.pill4': 'Clean Architecture',
+        'about.bento2.loc': 'Tenerife, Islas Canarias',
+        'about.bento2.badge': 'Hora local (UTC+0 / WET)',
+        'about.bento2.status': '🟢 Disponible para FCT / Prácticas',
+        'about.bento3.title': 'Explorando Ahora',
+        'about.bento3.item1': 'Spring Boot 3 & Security',
+        'about.bento3.item2': 'Docker & Contenedores',
+        'about.bento3.item3': 'Optimización de consultas SQL',
+        'about.bento4.title': 'Metodología y Valores',
+        'about.bento4.card1.title': 'Clean Code & SOLID',
+        'about.bento4.card1.desc': 'Código autodocumentado, modular y fácil de mantener.',
+        'about.bento4.card2.title': 'Git & Flujo Ágil',
+        'about.bento4.card2.desc': 'Commits atómicos, ramas claras y control de versiones riguroso.',
+        'about.bento4.card3.title': 'Resolución Eficiente',
+        'about.bento4.card3.desc': 'Análisis crítico de problemas antes de escribir la primera línea.',
         'trajectory.title': 'Mi trayectoria',
         'trajectory.desc': 'Mi evolución académica y profesional a lo largo de los años',
         'trajectory.item1.date': '2026 - Presente',
@@ -647,15 +704,28 @@
         'skills.langTitle': 'Languages detected across my repositories',
         'skills.loading': 'Loading languages...',
         'about.title': 'About me',
-        'about.card1.title': 'Education',
-        'about.card1.desc': '2nd year Multiplatform Applications Development (DAM) student passionate about backend development and building robust solutions.',
-        'about.card1.meta1': '2025-2026 - Present',
-        'about.card2.title': 'Goals',
-        'about.card2.desc': 'Specialize in Java and Spring Boot, contribute to open source projects, and develop applications that solve real-world problems.',
-        'about.card2.meta2': 'Architecture',
-        'about.card3.title': 'Methodology & Values',
-        'about.card3.desc': 'Commitment to Clean Code, scalable design patterns, collaborative Git workflows, and continuous learning of modern architectures.',
-        'about.card3.meta2': 'Teamwork',
+        'about.desc': 'Learn more about my background, technical focus, and engineering principles',
+        'about.bento1.badge': '<i class="fas fa-graduation-cap"></i> 2nd DAM · Multiplatform Development',
+        'about.bento1.title': 'Education & Backend Focus',
+        'about.bento1.desc': '2nd year Multiplatform Application Development student at IES Puerto de la Cruz Telesforo Bravo. Passionate about robust business logic, REST APIs, concurrent services, and efficient relational database management.',
+        'about.bento1.pill1': 'Java SE / EE',
+        'about.bento1.pill2': 'Spring Boot',
+        'about.bento1.pill3': 'PostgreSQL',
+        'about.bento1.pill4': 'Clean Architecture',
+        'about.bento2.loc': 'Tenerife, Canary Islands',
+        'about.bento2.badge': 'Local Time (UTC+0 / WET)',
+        'about.bento2.status': '🟢 Available for FCT / Internships',
+        'about.bento3.title': 'Currently Exploring',
+        'about.bento3.item1': 'Spring Boot 3 & Security',
+        'about.bento3.item2': 'Docker & Containers',
+        'about.bento3.item3': 'SQL Query Optimization',
+        'about.bento4.title': 'Methodology & Values',
+        'about.bento4.card1.title': 'Clean Code & SOLID',
+        'about.bento4.card1.desc': 'Self-documenting, modular, and scalable code.',
+        'about.bento4.card2.title': 'Git & Agile Workflow',
+        'about.bento4.card2.desc': 'Atomic commits, organized branches, and version control.',
+        'about.bento4.card3.title': 'Efficient Problem Solving',
+        'about.bento4.card3.desc': 'Critical problem analysis before writing code.',
         'trajectory.title': 'My trajectory',
         'trajectory.desc': 'My academic and professional journey over the years',
         'trajectory.item1.date': '2026 - Present',
@@ -1217,6 +1287,9 @@
       // Inicializar spotlight y tilt 3D en las tarjetas
       initSpotlightCards();
 
+      // Inicializar reloj en vivo
+      initLiveClock();
+
       // Inicializar scrollspy y scroll-to-top
       initScrollspy();
       initScrollToTop();
@@ -1240,7 +1313,7 @@
     // ===== EFECTO SPOTLIGHT & 3D TILT EN TARJETAS =====
     function initSpotlightCards() {
       const isTouch = window.matchMedia('(hover: none)').matches || 'ontouchstart' in window;
-      const cards = document.querySelectorAll('.feature-card, .skill-category-card, .focus-item, .stat-card, .github-languages-panel');
+      const cards = document.querySelectorAll('.feature-card, .skill-category-card, .focus-item, .stat-card, .github-languages-panel, .bento-card');
 
       cards.forEach(card => {
         if (card.dataset.spotlightInitialized) return;
@@ -1287,6 +1360,27 @@
           card.style.removeProperty('--mouse-y');
         });
       });
+    }
+
+    // ===== RELOJ EN VIVO (ZONA CANARIAS / WET) =====
+    function initLiveClock() {
+      const clockEl = document.getElementById('liveClock');
+      if (!clockEl) return;
+
+      function updateClock() {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('es-ES', {
+          timeZone: 'Atlantic/Canary',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        });
+        clockEl.textContent = timeStr;
+      }
+
+      updateClock();
+      setInterval(updateClock, 1000);
     }
 
     // ===== SCROLLSPY (SECCIÓN ACTIVA EN MENÚ) =====

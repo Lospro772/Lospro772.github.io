@@ -9,10 +9,27 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="shortcut icon" href="assets/img/favicon.svg">
+  
   <!-- Estilos base (siempre se carga) -->
-  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/base.css?v=2">
   <!-- Tema (cambia entre dark/light) -->
-  <link id="theme-style" rel="stylesheet" href="/assets/css/dark-theme.css">
+  <link id="theme-style" rel="stylesheet" href="assets/css/dark-theme.css">
+  
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      const themeLink = document.getElementById('theme-style');
+      if (themeLink) {
+        themeLink.href = savedTheme === 'light' ? 'assets/css/light-theme.css' : 'assets/css/dark-theme.css';
+      }
+      const savedLang = localStorage.getItem('language') || 'es';
+      document.documentElement.setAttribute('lang', savedLang);
+    })();
+  </script>
 </head>
 <body>
   <!-- Efectos de fondo -->
@@ -25,26 +42,33 @@
   <!-- Overlay de bienvenida -->
   <div id="welcome-overlay">
     <div class="welcome-content">
-      <h1 class="welcome-title">¡Bienvenido!</h1>
-      <p class="welcome-subtitle">Yasiel Llanos Yanes - DAM</p>
+      <h1 class="welcome-title" data-i18n="welcome.title">¡Bienvenido!</h1>
+      <p class="welcome-subtitle" data-i18n="welcome.subtitle">Yasiel Llanos Yanes - 2º DAM</p>
       <div class="welcome-spinner"></div>
     </div>
   </div>
 
   <!-- Menú fijo -->
   <nav class="fixed-menu">
-    <a href="#inicio">Inicio</a>
-    <a href="#sobre-mi">Sobre mí</a>
-    <a href="#trayectoria">Trayectoria</a>
-    <a href="#destacados">Destacados</a>
-    <a href="#repositorios">Repositorios</a>
-    <a href="#contacto">Contacto</a>
+    <a href="#inicio" data-i18n="nav.home">Inicio</a>
+    <a href="#habilidades" data-i18n="nav.skills">Habilidades</a>
+    <a href="#sobre-mi" data-i18n="nav.about">Sobre mí</a>
+    <a href="#trayectoria" data-i18n="nav.trajectory">Trayectoria</a>
+    <a href="#destacados" data-i18n="nav.featured">Destacados</a>
+    <a href="#repositorios" data-i18n="nav.repos">Repositorios</a>
+    <a href="#contacto" data-i18n="nav.contact">Contacto</a>
   </nav>
 
-  <!-- Botón tema -->
-  <div class="theme-toggle" id="themeToggle">
-    <i class="fas fa-sun" id="themeIcon"></i>
-    <span>Tema claro</span>
+  <!-- Acciones superiores (Idioma y Tema) -->
+  <div class="top-actions">
+    <div class="lang-toggle" id="langToggle" role="button" tabindex="0" title="Cambiar idioma / Switch language">
+      <i class="fas fa-globe"></i>
+      <span id="langLabel">EN</span>
+    </div>
+    <div class="theme-toggle" id="themeToggle" role="button" tabindex="0">
+      <i class="fas fa-sun" id="themeIcon"></i>
+      <span id="themeText">Tema claro</span>
+    </div>
   </div>
 
   <main class="page-content">
@@ -52,42 +76,54 @@
     <section id="inicio">
       <div class="hero-grid">
         <div class="hero-content fade-in-left">
-          <span class="hero-badge">🚀 Estudiante DAM</span>
+          <span class="hero-badge" data-i18n="hero.badge"><i class="fas fa-terminal"></i> Desarrollador Multiplataforma · 2º DAM</span>
           <h1 class="hero-name">
             Yasiel <span>Llanos</span><br>
             Yanes
           </h1>
-          <p class="hero-description">
-            Desarrollador en formación con pasión por crear aplicaciones funcionales y elegantes. Especializado en Java y tecnologías web.
+          <p class="hero-description" data-i18n="hero.desc">
+            Desarrollador enfocado en soluciones backend robustas, arquitecturas limpias y aplicaciones multiplataforma eficientes.
           </p>
           
-          <div class="hero-stats">
-            <div class="stat-item">
-              <div class="stat-number">+1</div>
-              <div class="stat-label">Proyectos</div>
+          <div class="hero-focus-grid">
+            <div class="focus-item">
+              <i class="fas fa-server"></i>
+              <div>
+                <strong data-i18n="hero.focus1.title">Backend & Lógica</strong>
+                <span data-i18n="hero.focus1.sub">Java · Spring Boot</span>
+              </div>
             </div>
-            <div class="stat-item">
-              <div class="stat-number">4</div>
-              <div class="stat-label">Tecnologías</div>
+            <div class="focus-item">
+              <i class="fas fa-mobile-alt"></i>
+              <div>
+                <strong data-i18n="hero.focus2.title">Multiplataforma</strong>
+                <span data-i18n="hero.focus2.sub">Android · JavaFX</span>
+              </div>
             </div>
-            <div class="stat-item">
-              <div class="stat-number">1º</div>
-              <div class="stat-label">DAM</div>
+            <div class="focus-item">
+              <i class="fas fa-database"></i>
+              <div>
+                <strong data-i18n="hero.focus3.title">Bases de Datos</strong>
+                <span data-i18n="hero.focus3.sub">PostgreSQL · SQL</span>
+              </div>
             </div>
           </div>
 
           <div class="tech-stack">
             <span class="tech-pill">Java</span>
             <span class="tech-pill">SQL</span>
-            <span class="tech-pill">HTML/CSS</span>
+            <span class="tech-pill">Spring Boot</span>
+            <span class="tech-pill">Android</span>
             <span class="tech-pill">Git</span>
-            <span class="tech-pill">JavaScript</span>
             <span class="tech-pill">PostgreSQL</span>
           </div>
 
           <div class="social-links">
             <a href="https://github.com/Lospro772" target="_blank" class="btn btn-primary">
               <i class="fab fa-github"></i> GitHub
+            </a>
+            <a href="https://linkedin.com" target="_blank" class="btn btn-outline">
+              <i class="fab fa-linkedin"></i> LinkedIn
             </a>
             <a href="mailto:yasllanyan@gmail.com" class="btn btn-outline">
               <i class="fas fa-envelope"></i> Email
@@ -96,91 +132,179 @@
         </div>
 
         <div class="profile-image-container fade-in-right">
-          <div class="profile-frame">
-            <div class="profile-ring"></div>
-            <img src="/assets/img/perfil.png" alt="Yasiel Llanos" class="profile-image" onerror="this.src='https://via.placeholder.com/400x400?text=Yasiel+Llanos'">
-            <div class="profile-glow"></div>
-          </div>
-          <div class="floating-tech-icons">
-            <i class="fab fa-java floating-icon" style="top: 10%; right: 0;"></i>
-            <i class="fas fa-database floating-icon" style="bottom: 20%; left: 0;"></i>
-            <i class="fab fa-js floating-icon" style="bottom: 10%; right: 20%;"></i>
-            <i class="fab fa-git-alt floating-icon" style="top: 30%; left: 10%;"></i>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ESTADÍSTICAS DE GITHUB -->
-    <section id="github-stats">
-      <div class="github-stats-section fade-in-up">
-        <div class="section-header">
-          <span class="section-number">⚡</span>
-          <h2 class="section-title">Estadísticas de GitHub</h2>
-        </div>
-        <p class="section-description">Mis métricas de desarrollo en tiempo real</p>
-        
-        <div id="githubStats" class="stats-grid">
-          <div class="stat-loading">
-            <i class="fas fa-spinner fa-spin"></i>
-            <p>Cargando estadísticas...</p>
-          </div>
-        </div>
-        
-        <!-- Lenguajes más utilizados -->
-        <div style="margin-top: 2rem;">
-          <h3 style="text-align: center; margin-bottom: 1rem;">Lenguajes más utilizados</h3>
-          <div id="languageStats" class="repo-languages">
-            <div class="stat-loading">
-              <i class="fas fa-spinner fa-spin"></i>
-              <p>Cargando lenguajes...</p>
+          <div class="profile-card-wrapper">
+            <div class="profile-frame">
+              <div class="profile-ring"></div>
+              <img src="assets/img/perfil.png" alt="Yasiel Llanos" class="profile-image" onerror="this.src='https://via.placeholder.com/400x400?text=Yasiel+Llanos'">
+              <div class="profile-glow"></div>
+            </div>
+            <div class="profile-status-badge">
+              <span class="status-pulse"></span>
+              <span data-i18n="hero.status">Disponible para prácticas FCT / Dual</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SOBRE MÍ SECTION -->
-    <section id="sobre-mi">
+    <!-- HABILIDADES Y STACK TÉCNICO -->
+    <section id="habilidades">
       <div class="section-header fade-in-up">
         <span class="section-number">01</span>
-        <h2 class="section-title">Sobre mí</h2>
+        <h2 class="section-title" data-i18n="skills.title">Habilidades y Stack Técnico</h2>
+      </div>
+      <p class="section-description fade-in-up" data-i18n="skills.desc">Tecnologías, herramientas y metodologías aplicadas en mis proyectos</p>
+
+      <div class="skills-grid">
+        <div class="skill-category-card fade-in-up">
+          <div class="skill-category-header">
+            <i class="fas fa-server"></i>
+            <h3 data-i18n="skills.cat1.title">Backend & Lógica</h3>
+          </div>
+          <ul class="skill-list">
+            <li><i class="fab fa-java"></i> Java</li>
+            <li><i class="fas fa-leaf"></i> Spring Boot (APIs REST)</li>
+            <li data-i18n="skills.cat1.item3"><i class="fas fa-shield-alt"></i> Seguridad y Buenas Prácticas</li>
+          </ul>
+        </div>
+
+        <div class="skill-category-card fade-in-up" style="animation-delay: 0.1s">
+          <div class="skill-category-header">
+            <i class="fas fa-database"></i>
+            <h3 data-i18n="skills.cat2.title">Bases de Datos & Persistencia</h3>
+          </div>
+          <ul class="skill-list">
+            <li><i class="fas fa-database"></i> PostgreSQL & MySQL</li>
+            <li data-i18n="skills.cat2.item2"><i class="fas fa-table"></i> Diseño relacional y consultas SQL</li>
+            <li data-i18n="skills.cat2.item3"><i class="fas fa-file-code"></i> Manejo de datos JSON / XML</li>
+          </ul>
+        </div>
+
+        <div class="skill-category-card fade-in-up" style="animation-delay: 0.2s">
+          <div class="skill-category-header">
+            <i class="fas fa-laptop-code"></i>
+            <h3 data-i18n="skills.cat3.title">Móvil & Interfaces</h3>
+          </div>
+          <ul class="skill-list">
+            <li data-i18n="skills.cat3.item1"><i class="fas fa-desktop"></i> JavaFX & Interfaces gráficas</li>
+            <li data-i18n="skills.cat3.item2"><i class="fab fa-html5"></i> HTML5 & CSS3 moderno</li>
+            <li data-i18n="skills.cat3.item3"><i class="fab fa-js"></i> JavaScript para web</li>
+          </ul>
+        </div>
+
+        <div class="skill-category-card fade-in-up" style="animation-delay: 0.3s">
+          <div class="skill-category-header">
+            <i class="fas fa-tools"></i>
+            <h3 data-i18n="skills.cat4.title">Herramientas & Entorno</h3>
+          </div>
+          <ul class="skill-list">
+            <li data-i18n="skills.cat4.item1"><i class="fab fa-git-alt"></i> Git & GitHub (Control de versiones)</li>
+            <li><i class="fab fa-linux"></i> Linux / WSL & Terminal</li>
+            <li><i class="fas fa-code"></i> IntelliJ IDEA, VS Code & Maven</li>
+          </ul>
+        </div>
       </div>
 
-      <div class="cards-grid">
-        <div class="feature-card fade-in-up" style="animation-delay: 0.1s">
-          <div class="card-icon">
-            <i class="fas fa-user-graduate"></i>
+      <!-- Lenguajes en tiempo real desde GitHub -->
+      <div class="github-languages-panel fade-in-up" style="margin-top: 2.5rem;">
+        <div class="panel-header">
+          <i class="fab fa-github"></i>
+          <h4 data-i18n="skills.langTitle">Lenguajes detectados en mis repositorios</h4>
+        </div>
+        <div id="languageStats" class="repo-languages">
+          <div class="stat-loading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p data-i18n="skills.loading">Cargando lenguajes...</p>
           </div>
-          <h3>Formación</h3>
-          <p>Estudiante de 1º de Desarrollo de Aplicaciones Multiplataforma (DAM) con interés en el desarrollo backend y la creación de soluciones robustas.</p>
-          <div class="card-meta">
-            <span>2025-2026 - Actualidad</span>
-            <span>IES Puerto de la Cruz Telesforo Bravo</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOBRE MÍ SECTION (BENTO GRID) -->
+    <section id="sobre-mi">
+      <div class="section-header fade-in-up">
+        <span class="section-number">02</span>
+        <h2 class="section-title" data-i18n="about.title">Sobre mí</h2>
+      </div>
+      <p class="section-description fade-in-up" data-i18n="about.desc">Conoce más sobre mi perfil, enfoque técnico y principios de desarrollo</p>
+
+      <div class="bento-grid">
+        <!-- 1. Tarjeta Principal (Formación y Enfoque) - 2 columnas -->
+        <div class="bento-card bento-card-main fade-in-up">
+          <div class="bento-header">
+            <span class="bento-badge" data-i18n="about.bento1.badge"><i class="fas fa-graduation-cap"></i> 2º DAM · Desarrollo Multiplataforma</span>
+          </div>
+          <h3 data-i18n="about.bento1.title">Formación y Enfoque Backend</h3>
+          <p data-i18n="about.bento1.desc">
+            Estudiante de 2º de Desarrollo de Aplicaciones Multiplataforma en el IES Puerto de la Cruz Telesforo Bravo. Especial interés en lógica de negocio robusta, APIs REST, servicios concurrentes y acceso eficiente a bases de datos relacionales.
+          </p>
+          <div class="bento-pills">
+            <span class="tech-pill" data-i18n="about.bento1.pill1">Java SE / EE</span>
+            <span class="tech-pill" data-i18n="about.bento1.pill2">Spring Boot</span>
+            <span class="tech-pill" data-i18n="about.bento1.pill3">PostgreSQL</span>
+            <span class="tech-pill" data-i18n="about.bento1.pill4">Clean Architecture</span>
           </div>
         </div>
 
-        <div class="feature-card fade-in-up" style="animation-delay: 0.2s">
-          <div class="card-icon">
-            <i class="fas fa-code"></i>
+        <!-- 2. Tarjeta Ubicación y Reloj en Vivo -->
+        <div class="bento-card bento-card-clock fade-in-up" style="animation-delay: 0.1s">
+          <div class="bento-header">
+            <span class="bento-badge"><i class="fas fa-map-marker-alt"></i> <span data-i18n="about.bento2.loc">Tenerife, Islas Canarias</span></span>
           </div>
-          <h3>Objetivos</h3>
-          <p>Especializarme en Java y Spring Boot, contribuir a proyectos open source y desarrollar aplicaciones que resuelvan problemas reales.</p>
-          <div class="card-meta">
-            <span>Backend</span>
-            <span>Arquitectura</span>
+          <div class="live-clock-container">
+            <div class="live-clock" id="liveClock">--:--:--</div>
+            <div class="clock-label">
+              <span class="pulse-dot"></span>
+              <span data-i18n="about.bento2.badge">Hora local (UTC+0 / WET)</span>
+            </div>
+          </div>
+          <div class="clock-footer">
+            <span class="badge-status-pill" data-i18n="about.bento2.status">🟢 Disponible para FCT / Prácticas</span>
           </div>
         </div>
 
-        <div class="feature-card fade-in-up" style="animation-delay: 0.3s">
-          <div class="card-icon">
-            <i class="fas fa-heart"></i>
+        <!-- 3. Tarjeta Enfoque Actual -->
+        <div class="bento-card bento-card-focus fade-in-up" style="animation-delay: 0.2s">
+          <div class="bento-header">
+            <span class="bento-badge"><i class="fas fa-compass"></i> <span data-i18n="about.bento3.title">Explorando Ahora</span></span>
           </div>
-          <h3>Intereses</h3>
-          <p>Además de la programación, me apasiona la música, el deporte y aprender nuevas tecnologías que me permitan crecer profesionalmente.</p>
-          <div class="card-meta">
-            <span>🎸 Música</span>
-            <span>⚽ Deporte</span>
+          <ul class="bento-focus-list">
+            <li>
+              <i class="fas fa-chevron-right"></i>
+              <span data-i18n="about.bento3.item1">Spring Boot 3 & Security</span>
+            </li>
+            <li>
+              <i class="fas fa-chevron-right"></i>
+              <span data-i18n="about.bento3.item2">Docker & Contenedores</span>
+            </li>
+            <li>
+              <i class="fas fa-chevron-right"></i>
+              <span data-i18n="about.bento3.item3">Optimización de consultas SQL</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 4. Tarjeta Metodología & Valores (2 columnas) -->
+        <div class="bento-card bento-card-values fade-in-up" style="animation-delay: 0.3s">
+          <div class="bento-header">
+            <span class="bento-badge"><i class="fas fa-shield-alt"></i> <span data-i18n="about.bento4.title">Metodología y Valores</span></span>
+          </div>
+          <div class="bento-pillars-grid">
+            <div class="pillar-box">
+              <i class="fas fa-code"></i>
+              <strong data-i18n="about.bento4.card1.title">Clean Code & SOLID</strong>
+              <p data-i18n="about.bento4.card1.desc">Código autodocumentado, modular y fácil de mantener.</p>
+            </div>
+            <div class="pillar-box">
+              <i class="fab fa-git-alt"></i>
+              <strong data-i18n="about.bento4.card2.title">Git & Flujo Ágil</strong>
+              <p data-i18n="about.bento4.card2.desc">Commits atómicos, ramas claras y control de versiones riguroso.</p>
+            </div>
+            <div class="pillar-box">
+              <i class="fas fa-lightbulb"></i>
+              <strong data-i18n="about.bento4.card3.title">Resolución Eficiente</strong>
+              <p data-i18n="about.bento4.card3.desc">Análisis crítico de problemas antes de escribir la primera línea.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -189,27 +313,25 @@
     <!-- TRAYECTORIA EDUCATIVA SECTION -->
     <section id="trayectoria">
       <div class="section-header fade-in-up">
-        <span class="section-number">02</span>
-        <h2 class="section-title">Mi trayectoria</h2>
+        <span class="section-number">03</span>
+        <h2 class="section-title" data-i18n="trajectory.title">Mi trayectoria</h2>
       </div>
-      <p class="section-description fade-in-up">Mi evolución académica y profesional a lo largo de los años</p>
+      <p class="section-description fade-in-up" data-i18n="trajectory.desc">Mi evolución académica y profesional a lo largo de los años</p>
 
       <div class="timeline-container">
-        <!-- Línea de tiempo vertical -->
         <div class="timeline">
-          <!-- 2024 - Actualidad -->
+          <!-- 2026 - Actualidad -->
           <div class="timeline-item fade-in-up">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-              <div class="timeline-date">2024 - Presente</div>
-              <div class="timeline-title">
+              <div class="timeline-date" data-i18n="trajectory.item1.date">2026 - Presente</div>
+              <div class="timeline-title" data-i18n="trajectory.item1.title">
                 <i class="fas fa-graduation-cap"></i>
                 Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)
               </div>
               <div class="timeline-subtitle">IES Puerto de la Cruz Telesforo Bravo</div>
-              <p class="timeline-description">
-                Actualmente cursando primer año, aprendiendo Java, SQL, programación estructurada y orientada a objetos, 
-                desarrollo de interfaces y bases de datos.
+              <p class="timeline-description" data-i18n="trajectory.item1.desc">
+                Actualmente cursando segundo año, profundizando en desarrollo de aplicaciones multiplataforma, desarrollo móvil, servicios y procesos concurrentes, y acceso a datos.
               </p>
               <div class="timeline-tags">
                 <span class="tag">Java</span>
@@ -224,18 +346,18 @@
             <div class="timeline-dot"></div>
             <div class="timeline-content">
               <div class="timeline-date">2023 - 2025</div>
-              <div class="timeline-title">
+              <div class="timeline-title" data-i18n="trajectory.item2.title">
                 <i class="fas fa-school"></i>
                 Bachillerato Tecnológico
               </div>
               <div class="timeline-subtitle">IES Mencey Bencomo</div>
-              <p class="timeline-description">
+              <p class="timeline-description" data-i18n="trajectory.item2.desc">
                 Bachillerato con orientación tecnológica, donde adquirí bases en matemáticas,
                 tecnología, despertando mi interés por el mundo del desarrollo software.
               </p>
               <div class="timeline-tags">
-                <span class="tag">Matemáticas</span>
-                <span class="tag">Tecnología</span>
+                <span class="tag" data-i18n="trajectory.item2.tag1">Matemáticas</span>
+                <span class="tag" data-i18n="trajectory.item2.tag2">Tecnología</span>
               </div>
             </div>
           </div>
@@ -244,18 +366,18 @@
             <div class="timeline-dot"></div>
             <div class="timeline-content">
               <div class="timeline-date">2019 - 2023</div>
-              <div class="timeline-title">
+              <div class="timeline-title" data-i18n="trajectory.item3.title">
                 <i class="fas fa-book"></i>
                 Educación Secundaria Obligatoria (ESO)
               </div>
               <div class="timeline-subtitle">Colegio Nazaret Los Realejos</div>
-              <p class="timeline-description">
+              <p class="timeline-description" data-i18n="trajectory.item3.desc">
                 Primeros contactos con la informática y la tecnología, participando en talleres de robótica 
                 y actividades extraescolares relacionadas con la programación.
               </p>
               <div class="timeline-tags">
-                <span class="tag">Informática básica</span>
-                <span class="tag">Robótica</span>
+                <span class="tag" data-i18n="trajectory.item3.tag1">Informática básica</span>
+                <span class="tag" data-i18n="trajectory.item3.tag2">Robótica</span>
               </div>
             </div>
           </div>
@@ -266,10 +388,10 @@
     <!-- DESTACADOS SECTION -->
     <section id="destacados">
       <div class="section-header fade-in-up">
-        <span class="section-number">03</span>
-        <h2 class="section-title">Proyectos destacados</h2>
+        <span class="section-number">04</span>
+        <h2 class="section-title" data-i18n="featured.title">Proyectos destacados</h2>
       </div>
-      <p class="section-description fade-in-up">
+      <p class="section-description fade-in-up" data-i18n="featured.desc">
         Repositorios con topic <strong>"showcase"</strong> en GitHub
       </p>
       <div id="featured" class="cards-grid"></div>
@@ -278,18 +400,18 @@
     <!-- REPOSITORIOS SECTION -->
     <section id="repositorios">
       <div class="section-header fade-in-up">
-        <span class="section-number">04</span>
-        <h2 class="section-title">Repositorios</h2>
+        <span class="section-number">05</span>
+        <h2 class="section-title" data-i18n="repos.title">Repositorios</h2>
       </div>
 
       <div class="toolbar fade-in-up">
-        <input id="q" class="input" placeholder="🔍 Buscar repositorios..." />
+        <input id="q" class="input" placeholder="🔍 Buscar repositorios..." data-i18n-placeholder="repos.search" />
         <select id="sort" class="select">
-          <option value="updated">📅 Más recientes</option>
-          <option value="stars">⭐ Más estrellas</option>
-          <option value="name">📝 Orden alfabético</option>
+          <option value="updated" data-i18n="repos.sortRecent">📅 Más recientes</option>
+          <option value="stars" data-i18n="repos.sortStars">⭐ Más estrellas</option>
+          <option value="name" data-i18n="repos.sortAlpha">📝 Orden alfabético</option>
         </select>
-        <button class="btn active" data-topic="all">Todos</button>
+        <button class="btn active" data-topic="all" data-i18n="repos.topicAll">Todos</button>
         <button class="btn" data-topic="showcase">🌟 Showcase</button>
         <button class="btn" data-topic="web">🌐 Web</button>
         <button class="btn" data-topic="backend">⚙️ Backend</button>
@@ -301,10 +423,10 @@
     <!-- SECCIÓN DE CONTACTO -->
     <section id="contacto">
       <div class="section-header fade-in-up">
-        <span class="section-number">05</span>
-        <h2 class="section-title">Contacto</h2>
+        <span class="section-number">06</span>
+        <h2 class="section-title" data-i18n="contact.title">Contacto</h2>
       </div>
-      <p class="section-description fade-in-up">¿Hablamos? Estoy disponible para colaboraciones y oportunidades</p>
+      <p class="section-description fade-in-up" data-i18n="contact.desc">¿Hablamos? Estoy disponible para colaboraciones y oportunidades</p>
 
       <div class="contact-container">
         <div class="contact-info fade-in-left">
@@ -320,11 +442,21 @@
 
           <div class="contact-item">
             <div class="contact-icon">
+              <i class="fab fa-linkedin"></i>
+            </div>
+            <div class="contact-details">
+              <h4>LinkedIn</h4>
+              <a href="https://linkedin.com" target="_blank">Perfil de LinkedIn</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">
               <i class="fas fa-map-marker-alt"></i>
             </div>
             <div class="contact-details">
-              <h4>Ubicación</h4>
-              <p>Tenerife, Islas Canarias</p>
+              <h4 data-i18n="contact.locationTitle">Ubicación</h4>
+              <p data-i18n="contact.location">Tenerife, Islas Canarias</p>
             </div>
           </div>
 
@@ -339,8 +471,9 @@
           </div>
 
           <div class="contact-social">
-            <a href="https://github.com/Lospro772" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="mailto:yasllanyan@gmail.com"><i class="fas fa-envelope"></i></a>
+            <a href="https://github.com/Lospro772" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:yasllanyan@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
           </div>
         </div>
 
@@ -348,26 +481,27 @@
           <!-- REEMPLAZA "TU_ID_AQUI" CON EL ID DE FORMSPREE -->
           <!-- REEMPLAZA "TUDOMINIO.COM" CON TU DOMINIO REAL -->
           <form id="contactForm" action="https://formspree.io/f/maqpojzl" method="POST">
+            <div id="formStatus" class="form-status" style="display: none;"></div>
             <div class="form-group">
-              <label for="name">Nombre</label>
-              <input type="text" id="name" name="nombre" required placeholder="Tu nombre">
+              <label for="name" data-i18n="contact.formName">Nombre</label>
+              <input type="text" id="name" name="nombre" required placeholder="Tu nombre" data-i18n-placeholder="contact.formNamePlaceholder">
             </div>
             <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" required placeholder="tu@email.com">
+              <label for="email" data-i18n="contact.formEmail">Email</label>
+              <input type="email" id="email" name="email" required placeholder="tu@email.com" data-i18n-placeholder="contact.formEmailPlaceholder">
             </div>
             <div class="form-group">
-              <label for="subject">Asunto</label>
-              <input type="text" id="subject" name="asunto" required placeholder="¿Sobre qué quieres hablar?">
+              <label for="subject" data-i18n="contact.formSubject">Asunto</label>
+              <input type="text" id="subject" name="asunto" required placeholder="¿Sobre qué quieres hablar?" data-i18n-placeholder="contact.formSubjectPlaceholder">
             </div>
             <div class="form-group">
-              <label for="message">Mensaje</label>
-              <textarea id="message" name="mensaje" required placeholder="Escribe tu mensaje aquí..."></textarea>
+              <label for="message" data-i18n="contact.formMessage">Mensaje</label>
+              <textarea id="message" name="mensaje" required placeholder="Escribe tu mensaje aquí..." data-i18n-placeholder="contact.formMessagePlaceholder"></textarea>
             </div>
             <!-- Campo oculto para redirigir después del envío -->
             <input type="hidden" name="_next" value="https://lospro772.github.io">
             <input type="hidden" name="_subject" value="Nuevo mensaje desde tu portfolio">
-            <button type="submit" class="btn-submit">
+            <button type="submit" class="btn-submit" data-i18n="contact.formSubmit">
               <i class="fas fa-paper-plane"></i> Enviar mensaje
             </button>
           </form>
@@ -376,30 +510,372 @@
 
       <!-- Footer -->
       <div class="footer">
-        <p>© 2025 Yasiel Llanos Yanes - Todos los derechos reservados</p>
-        <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+        <p data-i18n="footer.copy">© 2026 Yasiel Llanos Yanes - Todos los derechos reservados</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;" data-i18n="footer.passion">
           <i class="fas fa-code"></i> Hecho con pasión desde Tenerife
         </p>
       </div>
     </section>
   </main>
 
+  <!-- Botón volver arriba -->
+  <button id="scrollToTop" class="scroll-to-top" aria-label="Volver arriba">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
   <script>
     const GITHUB_USERNAME = "Lospro772";
     const FEATURED_TOPIC = "showcase";
+    const CACHE_KEY = "github_portfolio_cache";
+    const CACHE_TTL = 30 * 60 * 1000; // 30 minutos
+
+    const LANGUAGE_COLORS = {
+      Java: '#b07219',
+      JavaScript: '#f1e05a',
+      HTML: '#e34c26',
+      CSS: '#563d7c',
+      TypeScript: '#3178c6',
+      Python: '#3572A5',
+      Kotlin: '#A97BFF',
+      PHP: '#4F5D95',
+      C: '#555555',
+      'C++': '#f34b7d',
+      'C#': '#178600',
+      Dart: '#00B4AB',
+      Swift: '#F05138',
+      Shell: '#89e051'
+    };
+
     let allRepos = [];
     let activeTopic = "all";
+    let currentLang = localStorage.getItem('language') || 'es';
+
+    // ===== DICCIONARIO DE TRADUCCIÓN (ES / EN) =====
+    const TRANSLATIONS = {
+      es: {
+        'welcome.title': '¡Bienvenido!',
+        'welcome.subtitle': 'Yasiel Llanos Yanes - 2º DAM',
+        'nav.home': 'Inicio',
+        'nav.skills': 'Habilidades',
+        'nav.about': 'Sobre mí',
+        'nav.trajectory': 'Trayectoria',
+        'nav.featured': 'Destacados',
+        'nav.repos': 'Repositorios',
+        'nav.contact': 'Contacto',
+        'hero.badge': '<i class="fas fa-terminal"></i> Desarrollador Multiplataforma · 2º DAM',
+        'hero.desc': 'Desarrollador enfocado en soluciones backend robustas, arquitecturas limpias y aplicaciones multiplataforma eficientes.',
+        'hero.focus1.title': 'Backend & Lógica',
+        'hero.focus1.sub': 'Java · Spring Boot',
+        'hero.focus2.title': 'Multiplataforma',
+        'hero.focus2.sub': 'Android · JavaFX',
+        'hero.focus3.title': 'Bases de Datos',
+        'hero.focus3.sub': 'PostgreSQL · SQL',
+        'hero.status': 'Disponible para prácticas FCT / Dual',
+        'skills.title': 'Habilidades y Stack Técnico',
+        'skills.desc': 'Tecnologías, herramientas y metodologías aplicadas en mis proyectos',
+        'skills.cat1.title': 'Backend & Lógica',
+        'skills.cat1.item3': '<i class="fas fa-shield-alt"></i> Seguridad y Buenas Prácticas',
+        'skills.cat2.title': 'Bases de Datos & Persistencia',
+        'skills.cat2.item2': '<i class="fas fa-table"></i> Diseño relacional y consultas SQL',
+        'skills.cat2.item3': '<i class="fas fa-file-code"></i> Manejo de datos JSON / XML',
+        'skills.cat3.title': 'Móvil & Interfaces',
+        'skills.cat3.item1': '<i class="fas fa-desktop"></i> JavaFX & Interfaces gráficas',
+        'skills.cat3.item2': '<i class="fab fa-html5"></i> HTML5 & CSS3 moderno',
+        'skills.cat3.item3': '<i class="fab fa-js"></i> JavaScript para web',
+        'skills.cat4.title': 'Herramientas & Entorno',
+        'skills.cat4.item1': '<i class="fab fa-git-alt"></i> Git & GitHub (Control de versiones)',
+        'skills.langTitle': 'Lenguajes detectados en mis repositorios',
+        'skills.loading': 'Cargando lenguajes...',
+        'about.title': 'Sobre mí',
+        'about.desc': 'Conoce más sobre mi perfil, enfoque técnico y principios de desarrollo',
+        'about.bento1.badge': '<i class="fas fa-graduation-cap"></i> 2º DAM · Desarrollo Multiplataforma',
+        'about.bento1.title': 'Formación y Enfoque Backend',
+        'about.bento1.desc': 'Estudiante de 2º de Desarrollo de Aplicaciones Multiplataforma en el IES Puerto de la Cruz Telesforo Bravo. Especial interés en lógica de negocio robusta, APIs REST, servicios concurrentes y acceso eficiente a bases de datos relacionales.',
+        'about.bento1.pill1': 'Java SE / EE',
+        'about.bento1.pill2': 'Spring Boot',
+        'about.bento1.pill3': 'PostgreSQL',
+        'about.bento1.pill4': 'Clean Architecture',
+        'about.bento2.loc': 'Tenerife, Islas Canarias',
+        'about.bento2.badge': 'Hora local (UTC+0 / WET)',
+        'about.bento2.status': '🟢 Disponible para FCT / Prácticas',
+        'about.bento3.title': 'Explorando Ahora',
+        'about.bento3.item1': 'Spring Boot 3 & Security',
+        'about.bento3.item2': 'Docker & Contenedores',
+        'about.bento3.item3': 'Optimización de consultas SQL',
+        'about.bento4.title': 'Metodología y Valores',
+        'about.bento4.card1.title': 'Clean Code & SOLID',
+        'about.bento4.card1.desc': 'Código autodocumentado, modular y fácil de mantener.',
+        'about.bento4.card2.title': 'Git & Flujo Ágil',
+        'about.bento4.card2.desc': 'Commits atómicos, ramas claras y control de versiones riguroso.',
+        'about.bento4.card3.title': 'Resolución Eficiente',
+        'about.bento4.card3.desc': 'Análisis crítico de problemas antes de escribir la primera línea.',
+        'trajectory.title': 'Mi trayectoria',
+        'trajectory.desc': 'Mi evolución académica y profesional a lo largo de los años',
+        'trajectory.item1.date': '2026 - Presente',
+        'trajectory.item1.title': '<i class="fas fa-graduation-cap"></i> Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)',
+        'trajectory.item1.desc': 'Actualmente cursando segundo año, profundizando en desarrollo de aplicaciones multiplataforma, desarrollo móvil, servicios y procesos concurrentes, y acceso a datos.',
+        'trajectory.item2.title': '<i class="fas fa-school"></i> Bachillerato Tecnológico',
+        'trajectory.item2.desc': 'Bachillerato con orientación tecnológica, donde adquirí bases en matemáticas, tecnología, despertando mi interés por el mundo del desarrollo software.',
+        'trajectory.item2.tag1': 'Matemáticas',
+        'trajectory.item2.tag2': 'Tecnología',
+        'trajectory.item3.title': '<i class="fas fa-book"></i> Educación Secundaria Obligatoria (ESO)',
+        'trajectory.item3.desc': 'Primeros contactos con la informática y la tecnología, participando en talleres de robótica y actividades extraescolares relacionadas con la programación.',
+        'trajectory.item3.tag1': 'Informática básica',
+        'trajectory.item3.tag2': 'Robótica',
+        'featured.title': 'Proyectos destacados',
+        'featured.desc': 'Repositorios con topic <strong>"showcase"</strong> en GitHub',
+        'featured.emptyTitle': 'No hay repositorios disponibles',
+        'featured.emptyDesc': 'Conéctate a internet o revisa tu perfil de GitHub',
+        'featured.btnRepo': '<i class="fab fa-github"></i> Ver repositorio',
+        'featured.badgeProject': '<i class="fas fa-sparkles"></i> Proyecto',
+        'featured.badgeShowcase': '<i class="fas fa-award"></i> Showcase',
+        'repos.title': 'Repositorios',
+        'repos.search': '🔍 Buscar repositorios...',
+        'repos.sortRecent': '📅 Más recientes',
+        'repos.sortStars': '⭐ Más estrellas',
+        'repos.sortAlpha': '📝 Orden alfabético',
+        'repos.topicAll': 'Todos',
+        'repos.emptyTitle': 'No se encontraron repositorios',
+        'repos.emptyDesc': 'Prueba con otros filtros o términos de búsqueda',
+        'repos.btnCode': '<i class="fab fa-github"></i> Ver código',
+        'stats.publicRepos': 'Repositorios públicos',
+        'stats.totalStars': 'Estrellas totales',
+        'stats.followers': 'Seguidores',
+        'stats.forks': 'Forks',
+        'stats.noLanguages': 'No hay datos de lenguajes',
+        'stats.error': 'Error al cargar las estadísticas. Intenta de nuevo más tarde.',
+        'contact.title': 'Contacto',
+        'contact.desc': '¿Hablamos? Estoy disponible para colaboraciones y oportunidades',
+        'contact.locationTitle': 'Ubicación',
+        'contact.location': 'Tenerife, Islas Canarias',
+        'contact.formName': 'Nombre',
+        'contact.formNamePlaceholder': 'Tu nombre',
+        'contact.formEmail': 'Email',
+        'contact.formEmailPlaceholder': 'tu@email.com',
+        'contact.formSubject': 'Asunto',
+        'contact.formSubjectPlaceholder': '¿Sobre qué quieres hablar?',
+        'contact.formMessage': 'Mensaje',
+        'contact.formMessagePlaceholder': 'Escribe tu mensaje aquí...',
+        'contact.formSubmit': '<i class="fas fa-paper-plane"></i> Enviar mensaje',
+        'contact.formSending': '<i class="fas fa-spinner fa-spin"></i> Enviando...',
+        'contact.formSent': '<i class="fas fa-check"></i> ¡Mensaje enviado!',
+        'contact.formSuccess': '¡Mensaje enviado con éxito! Te responderé lo antes posible.',
+        'contact.formError': 'Hubo un error al enviar el mensaje. Puedes escribirme a yasllanyan@gmail.com',
+        'contact.formErrorBtn': '<i class="fas fa-exclamation-triangle"></i> Error al enviar',
+        'contact.formWarningFill': 'Por favor, completa todos los campos del formulario.',
+        'contact.formWarningEmail': 'Por favor, introduce una dirección de correo válida.',
+        'footer.copy': '© 2026 Yasiel Llanos Yanes - Todos los derechos reservados',
+        'footer.passion': '<i class="fas fa-code"></i> Hecho con pasión desde Tenerife',
+        'theme.dark': 'Tema oscuro',
+        'theme.light': 'Tema claro'
+      },
+      en: {
+        'welcome.title': 'Welcome!',
+        'welcome.subtitle': 'Yasiel Llanos Yanes - 2nd DAM',
+        'nav.home': 'Home',
+        'nav.skills': 'Skills',
+        'nav.about': 'About me',
+        'nav.trajectory': 'Trajectory',
+        'nav.featured': 'Featured',
+        'nav.repos': 'Repositories',
+        'nav.contact': 'Contact',
+        'hero.badge': '<i class="fas fa-terminal"></i> Multiplatform Developer · 2nd DAM',
+        'hero.desc': 'Developer focused on robust backend solutions, clean architectures, and efficient multiplatform applications.',
+        'hero.focus1.title': 'Backend & Logic',
+        'hero.focus1.sub': 'Java · Spring Boot',
+        'hero.focus2.title': 'Multiplatform',
+        'hero.focus2.sub': 'Android · JavaFX',
+        'hero.focus3.title': 'Databases',
+        'hero.focus3.sub': 'PostgreSQL · SQL',
+        'hero.status': 'Available for FCT / Dual internships',
+        'skills.title': 'Skills & Technical Stack',
+        'skills.desc': 'Technologies, tools, and methodologies applied across my projects',
+        'skills.cat1.title': 'Backend & Logic',
+        'skills.cat1.item3': '<i class="fas fa-shield-alt"></i> Security & Best Practices',
+        'skills.cat2.title': 'Databases & Persistence',
+        'skills.cat2.item2': '<i class="fas fa-table"></i> Relational design & SQL queries',
+        'skills.cat2.item3': '<i class="fas fa-file-code"></i> JSON / XML data handling',
+        'skills.cat3.title': 'Mobile & Interfaces',
+        'skills.cat3.item1': '<i class="fas fa-desktop"></i> JavaFX & Graphical Interfaces',
+        'skills.cat3.item2': '<i class="fab fa-html5"></i> Modern HTML5 & CSS3',
+        'skills.cat3.item3': '<i class="fab fa-js"></i> JavaScript for Web',
+        'skills.cat4.title': 'Tools & Environment',
+        'skills.cat4.item1': '<i class="fab fa-git-alt"></i> Git & GitHub (Version control)',
+        'skills.langTitle': 'Languages detected across my repositories',
+        'skills.loading': 'Loading languages...',
+        'about.title': 'About me',
+        'about.desc': 'Learn more about my background, technical focus, and engineering principles',
+        'about.bento1.badge': '<i class="fas fa-graduation-cap"></i> 2nd DAM · Multiplatform Development',
+        'about.bento1.title': 'Education & Backend Focus',
+        'about.bento1.desc': '2nd year Multiplatform Application Development student at IES Puerto de la Cruz Telesforo Bravo. Passionate about robust business logic, REST APIs, concurrent services, and efficient relational database management.',
+        'about.bento1.pill1': 'Java SE / EE',
+        'about.bento1.pill2': 'Spring Boot',
+        'about.bento1.pill3': 'PostgreSQL',
+        'about.bento1.pill4': 'Clean Architecture',
+        'about.bento2.loc': 'Tenerife, Canary Islands',
+        'about.bento2.badge': 'Local Time (UTC+0 / WET)',
+        'about.bento2.status': '🟢 Available for FCT / Internships',
+        'about.bento3.title': 'Currently Exploring',
+        'about.bento3.item1': 'Spring Boot 3 & Security',
+        'about.bento3.item2': 'Docker & Containers',
+        'about.bento3.item3': 'SQL Query Optimization',
+        'about.bento4.title': 'Methodology & Values',
+        'about.bento4.card1.title': 'Clean Code & SOLID',
+        'about.bento4.card1.desc': 'Self-documenting, modular, and scalable code.',
+        'about.bento4.card2.title': 'Git & Agile Workflow',
+        'about.bento4.card2.desc': 'Atomic commits, organized branches, and version control.',
+        'about.bento4.card3.title': 'Efficient Problem Solving',
+        'about.bento4.card3.desc': 'Critical problem analysis before writing code.',
+        'trajectory.title': 'My trajectory',
+        'trajectory.desc': 'My academic and professional journey over the years',
+        'trajectory.item1.date': '2026 - Present',
+        'trajectory.item1.title': '<i class="fas fa-graduation-cap"></i> Higher National Diploma in Multiplatform Application Development (DAM)',
+        'trajectory.item1.desc': 'Currently in second year, deepening knowledge in multiplatform application development, mobile development, concurrent services and processes, and data access.',
+        'trajectory.item2.title': '<i class="fas fa-school"></i> Technological Baccalaureate',
+        'trajectory.item2.desc': 'Baccalaureate focused on technology, gaining foundations in mathematics and computer science, sparking my passion for software engineering.',
+        'trajectory.item2.tag1': 'Mathematics',
+        'trajectory.item2.tag2': 'Technology',
+        'trajectory.item3.title': '<i class="fas fa-book"></i> Compulsory Secondary Education (ESO)',
+        'trajectory.item3.desc': 'First hands-on experience with technology and computing, participating in robotics workshops and extracurricular coding activities.',
+        'trajectory.item3.tag1': 'Basic Computing',
+        'trajectory.item3.tag2': 'Robotics',
+        'featured.title': 'Featured Projects',
+        'featured.desc': 'Repositories tagged with <strong>"showcase"</strong> on GitHub',
+        'featured.emptyTitle': 'No repositories available',
+        'featured.emptyDesc': 'Connect to the internet or check your GitHub profile',
+        'featured.btnRepo': '<i class="fab fa-github"></i> View repository',
+        'featured.badgeProject': '<i class="fas fa-sparkles"></i> Project',
+        'featured.badgeShowcase': '<i class="fas fa-award"></i> Showcase',
+        'repos.title': 'Repositories',
+        'repos.search': '🔍 Search repositories...',
+        'repos.sortRecent': '📅 Most recent',
+        'repos.sortStars': '⭐ Most stars',
+        'repos.sortAlpha': '📝 Alphabetical',
+        'repos.topicAll': 'All',
+        'repos.emptyTitle': 'No repositories found',
+        'repos.emptyDesc': 'Try different search terms or filters',
+        'repos.btnCode': '<i class="fab fa-github"></i> View code',
+        'stats.publicRepos': 'Public repositories',
+        'stats.totalStars': 'Total stars',
+        'stats.followers': 'Followers',
+        'stats.forks': 'Forks',
+        'stats.noLanguages': 'No language data available',
+        'stats.error': 'Error loading stats. Please try again later.',
+        'contact.title': 'Contact',
+        'contact.desc': "Let's connect! Open to internships, collaborations, and opportunities",
+        'contact.locationTitle': 'Location',
+        'contact.location': 'Tenerife, Canary Islands',
+        'contact.formName': 'Name',
+        'contact.formNamePlaceholder': 'Your name',
+        'contact.formEmail': 'Email',
+        'contact.formEmailPlaceholder': 'your@email.com',
+        'contact.formSubject': 'Subject',
+        'contact.formSubjectPlaceholder': 'What would you like to discuss?',
+        'contact.formMessage': 'Message',
+        'contact.formMessagePlaceholder': 'Write your message here...',
+        'contact.formSubmit': '<i class="fas fa-paper-plane"></i> Send message',
+        'contact.formSending': '<i class="fas fa-spinner fa-spin"></i> Sending...',
+        'contact.formSent': '<i class="fas fa-check"></i> Message sent!',
+        'contact.formSuccess': 'Message sent successfully! I will reply as soon as possible.',
+        'contact.formError': 'There was an error sending the message. You can email me at yasllanyan@gmail.com',
+        'contact.formErrorBtn': '<i class="fas fa-exclamation-triangle"></i> Error sending',
+        'contact.formWarningFill': 'Please complete all form fields.',
+        'contact.formWarningEmail': 'Please enter a valid email address.',
+        'footer.copy': '© 2026 Yasiel Llanos Yanes - All rights reserved',
+        'footer.passion': '<i class="fas fa-code"></i> Crafted with passion from Tenerife',
+        'theme.dark': 'Dark theme',
+        'theme.light': 'Light theme'
+      }
+    };
+
+    function t(key) {
+      return (TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) ||
+             (TRANSLATIONS['es'] && TRANSLATIONS['es'][key]) || key;
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang === 'en' ? 'en' : 'es';
+      document.documentElement.setAttribute('lang', currentLang);
+      localStorage.setItem('language', currentLang);
+
+      // Actualizar elementos con data-i18n
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const translation = t(key);
+        if (translation) {
+          el.innerHTML = translation;
+        }
+      });
+
+      // Actualizar placeholders con data-i18n-placeholder
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        const translation = t(key);
+        if (translation) {
+          el.setAttribute('placeholder', translation);
+        }
+      });
+
+      // Actualizar botón de idioma: si es 'es', muestra 'EN' (para cambiar a inglés) y viceversa
+      const langLabel = document.getElementById('langLabel');
+      if (langLabel) {
+        langLabel.textContent = currentLang === 'es' ? 'EN' : 'ES';
+      }
+
+      // Actualizar texto del tema según el idioma
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const themeText = document.getElementById('themeText');
+      if (themeText) {
+        themeText.textContent = currentTheme === 'light' ? t('theme.dark') : t('theme.light');
+      }
+
+      // Re-renderizar repos y featured para aplicar idioma en textos dinámicos
+      if (allRepos && allRepos.length > 0) {
+        renderFeatured(allRepos);
+        renderRepos();
+      }
+    }
+
+    function initLanguageToggle() {
+      const toggleBtn = document.getElementById('langToggle');
+      if (!toggleBtn) return;
+
+      toggleBtn.addEventListener('click', () => {
+        const nextLang = currentLang === 'es' ? 'en' : 'es';
+        setLanguage(nextLang);
+      });
+
+      toggleBtn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const nextLang = currentLang === 'es' ? 'en' : 'es';
+          setLanguage(nextLang);
+        }
+      });
+    }
 
     // ===== ANIMACIÓN DE BIENVENIDA =====
     function initWelcomeAnimation() {
       const overlay = document.getElementById('welcome-overlay');
-      
-      setTimeout(() => {
+      if (!overlay) return;
+
+      // Si ya se mostró en esta sesión, no volver a bloquear
+      if (sessionStorage.getItem('welcomeShown')) {
+        overlay.style.display = 'none';
+        return;
+      }
+
+      const hideOverlay = () => {
         overlay.style.opacity = '0';
         setTimeout(() => {
           overlay.style.display = 'none';
-        }, 1000);
-      }, 2500);
+        }, 500);
+        sessionStorage.setItem('welcomeShown', 'true');
+      };
+
+      // Permitir cerrar con clic o tras 1 segundo
+      overlay.addEventListener('click', hideOverlay);
+      setTimeout(hideOverlay, 1000);
     }
 
     // ===== MODO OSCURO/CLARO =====
@@ -407,100 +883,182 @@
       const themeStyle = document.getElementById('theme-style');
       const themeIcon = document.getElementById('themeIcon');
       const themeToggle = document.getElementById('themeToggle');
+      const themeText = document.getElementById('themeText');
       
-      // Forzar modo oscuro al inicio
-      themeStyle.href = '/assets/css/dark-theme.css';
-      themeIcon.className = 'fas fa-sun';
-      themeToggle.querySelector('span').textContent = 'Tema claro';
-      localStorage.setItem('theme', 'dark');
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      applyTheme(savedTheme);
 
-      themeToggle.addEventListener('click', () => {
-        const isDark = themeStyle.href.includes('dark');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          const current = document.documentElement.getAttribute('data-theme') || 'dark';
+          const newTheme = current === 'dark' ? 'light' : 'dark';
+          applyTheme(newTheme);
+        });
+      }
+
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
         
-        if (isDark) {
-          themeStyle.href = '/assets/css/light-theme.css';
-          themeIcon.className = 'fas fa-moon';
-          themeToggle.querySelector('span').textContent = 'Tema oscuro';
-          localStorage.setItem('theme', 'light');
-        } else {
-          themeStyle.href = '/assets/css/dark-theme.css';
-          themeIcon.className = 'fas fa-sun';
-          themeToggle.querySelector('span').textContent = 'Tema claro';
-          localStorage.setItem('theme', 'dark');
+        if (themeStyle) {
+          themeStyle.href = theme === 'light' ? 'assets/css/light-theme.css' : 'assets/css/dark-theme.css';
         }
-      });
+        if (themeIcon) {
+          themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+        if (themeText) {
+          themeText.textContent = theme === 'light' ? t('theme.dark') : t('theme.light');
+        }
+      }
     }
 
     // ===== FUNCIONES GITHUB =====
     function formatDate(iso) {
-      return new Date(iso).toLocaleDateString('es-ES', { 
+      const locale = currentLang === 'en' ? 'en-US' : 'es-ES';
+      return new Date(iso).toLocaleDateString(locale, { 
         year: 'numeric', 
         month: 'short', 
         day: 'numeric' 
       });
     }
 
-    async function fetchRepos() {
+    async function getGitHubData() {
+      // 1. Comprobar caché en localStorage
       try {
-        const res = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`);
-        if (!res.ok) throw new Error('Error al cargar repositorios');
-        
-        const repos = await res.json();
-        return repos.map(r => ({
+        const cached = localStorage.getItem(CACHE_KEY);
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (Date.now() - parsed.timestamp < CACHE_TTL && parsed.repos && parsed.stats) {
+            return parsed;
+          }
+        }
+      } catch (e) {
+        console.warn('Error leyendo caché:', e);
+      }
+
+      // 2. Si no hay caché válida, solicitar a GitHub
+      try {
+        const [userRes, reposRes] = await Promise.all([
+          fetch(`https://api.github.com/users/${GITHUB_USERNAME}`),
+          fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`)
+        ]);
+
+        if (!reposRes.ok) {
+          throw new Error(`GitHub API error: ${reposRes.status}`);
+        }
+
+        const userData = userRes.ok ? await userRes.json() : {};
+        const reposData = await reposRes.json();
+
+        const repos = reposData.map(r => ({
           name: r.name,
           html_url: r.html_url,
           description: r.description || 'Sin descripción',
-          language: r.language || '📁',
+          language: r.language || 'Otros',
           stargazers_count: r.stargazers_count || 0,
+          forks_count: r.forks_count || 0,
           updated_at: r.updated_at,
           topics: r.topics || []
         }));
+
+        const totalStars = repos.reduce((acc, repo) => acc + repo.stargazers_count, 0);
+        const totalForks = repos.reduce((acc, repo) => acc + repo.forks_count, 0);
+
+        const languages = {};
+        repos.forEach(repo => {
+          if (repo.language && repo.language !== 'Otros') {
+            languages[repo.language] = (languages[repo.language] || 0) + 1;
+          }
+        });
+
+        const sortedLanguages = Object.entries(languages)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 8);
+
+        const stats = {
+          public_repos: userData.public_repos !== undefined ? userData.public_repos : repos.length,
+          followers: userData.followers || 0,
+          total_stars: totalStars,
+          total_forks: totalForks,
+          languages: sortedLanguages
+        };
+
+        const payload = { timestamp: Date.now(), repos, stats };
+
+        try {
+          localStorage.setItem(CACHE_KEY, JSON.stringify(payload));
+        } catch (e) {
+          console.warn('No se pudo guardar en caché:', e);
+        }
+
+        return payload;
       } catch (error) {
-        console.error('Error:', error);
-        return [];
+        console.error('Error al obtener datos de GitHub:', error);
+        // Fallback a caché previa si existe
+        try {
+          const stale = localStorage.getItem(CACHE_KEY);
+          if (stale) return JSON.parse(stale);
+        } catch (e) {}
+        return null;
       }
     }
 
     function renderFeatured(repos) {
-      const featured = repos.filter(r => r.topics.includes(FEATURED_TOPIC)).slice(0, 6);
+      let featured = repos.filter(r => r.topics.includes(FEATURED_TOPIC)).slice(0, 6);
       const container = document.getElementById('featured');
+      if (!container) return;
       
+      // Fallback elegante si aún no hay repos con topic showcase: mostrar los más recientes/populares
+      const isFallback = featured.length === 0;
+      if (isFallback) {
+        featured = [...repos].sort((a, b) => b.stargazers_count - a.stargazers_count || new Date(b.updated_at) - new Date(a.updated_at)).slice(0, 3);
+      }
+
       if (featured.length === 0) {
         container.innerHTML = `
           <div class="feature-card" style="grid-column: 1/-1; text-align: center;">
             <i class="fas fa-folder-open" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
-            <h3>No hay repositorios destacados</h3>
-            <p>Añade el topic "${FEATURED_TOPIC}" a tus repositorios de GitHub para que aparezcan aquí</p>
+            <h3>${t('featured.emptyTitle')}</h3>
+            <p>${t('featured.emptyDesc')}</p>
           </div>
         `;
         return;
       }
 
-      container.innerHTML = featured.map(repo => `
+      container.innerHTML = featured.map(repo => {
+        const langColor = LANGUAGE_COLORS[repo.language] || 'var(--accent-primary)';
+        return `
         <div class="feature-card">
-          <div class="card-icon">
-            <i class="fas fa-star"></i>
+          <div class="card-header">
+            <div class="card-icon" style="margin-bottom: 0;">
+              <i class="fas fa-star"></i>
+            </div>
+            ${isFallback ? `<span class="badge-featured">${t('featured.badgeProject')}</span>` : `<span class="badge-featured">${t('featured.badgeShowcase')}</span>`}
           </div>
           <h3>${repo.name}</h3>
           <p>${repo.description}</p>
           <div class="card-meta">
-            <span><i class="fas fa-code"></i> ${repo.language}</span>
+            <span class="lang-tag"><span class="lang-dot" style="background-color: ${langColor};"></span> ${repo.language}</span>
             <span><i class="fas fa-star"></i> ${repo.stargazers_count}</span>
             <span><i class="fas fa-calendar"></i> ${formatDate(repo.updated_at)}</span>
           </div>
-          <div style="margin-top: 1rem;">
+          <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem;">
             ${repo.topics.slice(0, 3).map(t => `<span class="tech-pill" style="font-size: 0.8rem;">${t}</span>`).join('')}
           </div>
           <a href="${repo.html_url}" target="_blank" class="btn btn-outline" style="margin-top: 1.5rem; width: 100%; justify-content: center;">
-            <i class="fab fa-github"></i> Ver repositorio
+            ${t('featured.btnRepo')}
           </a>
         </div>
-      `).join('');
+      `;
+      }).join('');
+      initSpotlightCards();
     }
 
     function filterAndSortRepos(repos) {
-      const searchTerm = document.getElementById('q').value.toLowerCase();
-      const sortBy = document.getElementById('sort').value;
+      const searchInput = document.getElementById('q');
+      const sortSelect = document.getElementById('sort');
+      const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+      const sortBy = sortSelect ? sortSelect.value : 'updated';
 
       let filtered = repos.filter(repo => {
         const matchesSearch = repo.name.toLowerCase().includes(searchTerm) || 
@@ -526,20 +1084,23 @@
 
     function renderRepos() {
       const container = document.getElementById('repos');
+      if (!container) return;
       const filtered = filterAndSortRepos(allRepos);
 
       if (filtered.length === 0) {
         container.innerHTML = `
           <div class="feature-card" style="grid-column: 1/-1; text-align: center;">
             <i class="fas fa-search" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
-            <h3>No se encontraron repositorios</h3>
-            <p>Prueba con otros filtros o términos de búsqueda</p>
+            <h3>${t('repos.emptyTitle')}</h3>
+            <p>${t('repos.emptyDesc')}</p>
           </div>
         `;
         return;
       }
 
-      container.innerHTML = filtered.map(repo => `
+      container.innerHTML = filtered.map(repo => {
+        const langColor = LANGUAGE_COLORS[repo.language] || 'var(--accent-primary)';
+        return `
         <div class="feature-card">
           <div class="card-icon">
             <i class="fas fa-code-branch"></i>
@@ -547,111 +1108,92 @@
           <h3>${repo.name}</h3>
           <p>${repo.description}</p>
           <div class="card-meta">
-            <span><i class="fas fa-code"></i> ${repo.language}</span>
+            <span class="lang-tag"><span class="lang-dot" style="background-color: ${langColor};"></span> ${repo.language}</span>
             <span><i class="fas fa-star"></i> ${repo.stargazers_count}</span>
             <span><i class="fas fa-calendar"></i> ${formatDate(repo.updated_at)}</span>
           </div>
-          <div style="margin-top: 1rem;">
+          <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem;">
             ${repo.topics.map(t => `<span class="tech-pill" style="font-size: 0.8rem;">${t}</span>`).join('')}
           </div>
           <a href="${repo.html_url}" target="_blank" class="btn btn-outline" style="margin-top: 1.5rem; width: 100%; justify-content: center;">
-            <i class="fab fa-github"></i> Ver código
+            ${t('repos.btnCode')}
           </a>
         </div>
-      `).join('');
+      `;
+      }).join('');
+      initSpotlightCards();
     }
 
-    // ===== ESTADÍSTICAS DE GITHUB =====
-    async function fetchGitHubStats() {
-      try {
-        const userRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`);
-        const userData = await userRes.json();
-        
-        const reposRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100`);
-        const repos = await reposRes.json();
-        
-        const totalStars = repos.reduce((acc, repo) => acc + repo.stargazers_count, 0);
-        const totalForks = repos.reduce((acc, repo) => acc + repo.forks_count, 0);
-        const totalWatchers = repos.reduce((acc, repo) => acc + repo.watchers_count, 0);
-        
-        const languages = {};
-        repos.forEach(repo => {
-          if (repo.language) {
-            languages[repo.language] = (languages[repo.language] || 0) + 1;
-          }
-        });
-        
-        const sortedLanguages = Object.entries(languages)
-          .sort((a, b) => b[1] - a[1])
-          .slice(0, 8);
-        
-        return {
-          public_repos: userData.public_repos || 0,
-          followers: userData.followers || 0,
-          following: userData.following || 0,
-          total_stars: totalStars,
-          total_forks: totalForks,
-          total_watchers: totalWatchers,
-          languages: sortedLanguages
-        };
-      } catch (error) {
-        console.error('Error fetching GitHub stats:', error);
-        return null;
-      }
-    }
-
-    async function renderGitHubStats() {
+    function renderGitHubStats(stats) {
       const statsContainer = document.getElementById('githubStats');
       const languageContainer = document.getElementById('languageStats');
       
-      const stats = await fetchGitHubStats();
-      
-      if (!stats) {
-        statsContainer.innerHTML = `
-          <div class="stat-error">
-            <i class="fas fa-exclamation-triangle"></i>
-            <p>Error al cargar las estadísticas. Intenta de nuevo más tarde.</p>
-          </div>
-        `;
-        languageContainer.innerHTML = '';
-        return;
+      if (statsContainer) {
+        if (!stats) {
+          statsContainer.innerHTML = `
+            <div class="stat-error">
+              <i class="fas fa-exclamation-triangle"></i>
+              <p>${t('stats.error')}</p>
+            </div>
+          `;
+        } else {
+          statsContainer.innerHTML = `
+            <div class="stat-card">
+              <i class="fas fa-code-branch"></i>
+              <h3>${stats.public_repos}</h3>
+              <p>${t('stats.publicRepos')}</p>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-star"></i>
+              <h3>${stats.total_stars}</h3>
+              <p>${t('stats.totalStars')}</p>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-users"></i>
+              <h3>${stats.followers}</h3>
+              <p>${t('stats.followers')}</p>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-code-fork"></i>
+              <h3>${stats.total_forks}</h3>
+              <p>${t('stats.forks')}</p>
+            </div>
+          `;
+        }
       }
       
-      statsContainer.innerHTML = `
-        <div class="stat-card">
-          <i class="fas fa-code-branch"></i>
-          <h3>${stats.public_repos}</h3>
-          <p>Repositorios públicos</p>
-        </div>
-        <div class="stat-card">
-          <i class="fas fa-star"></i>
-          <h3>${stats.total_stars}</h3>
-          <p>Estrellas totales</p>
-        </div>
-        <div class="stat-card">
-          <i class="fas fa-users"></i>
-          <h3>${stats.followers}</h3>
-          <p>Seguidores</p>
-        </div>
-        <div class="stat-card">
-          <i class="fas fa-code-fork"></i>
-          <h3>${stats.total_forks}</h3>
-          <p>Forks</p>
-        </div>
-      `;
+      if (languageContainer) {
+        if (stats && stats.languages && stats.languages.length > 0) {
+          languageContainer.innerHTML = stats.languages.map(([lang, count]) => {
+            const langColor = LANGUAGE_COLORS[lang] || 'var(--accent-primary)';
+            return `<span class="lang-pill"><span class="lang-dot" style="background-color: ${langColor};"></span> ${lang} (${count})</span>`;
+          }).join('');
+        } else {
+          languageContainer.innerHTML = `<p style="text-align: center; color: var(--text-secondary);">${t('stats.noLanguages')}</p>`;
+        }
+      }
+      initSpotlightCards();
+    }
+
+    // ===== MENSAJES DE ESTADO DEL FORMULARIO =====
+    function showFormMessage(type, message, iconClass) {
+      const statusEl = document.getElementById('formStatus');
+      if (!statusEl) return;
+      statusEl.className = `form-status ${type}`;
+      statusEl.innerHTML = `<i class="${iconClass}"></i> <span>${message}</span>`;
+      statusEl.style.display = 'flex';
       
-      if (stats.languages.length > 0) {
-        languageContainer.innerHTML = stats.languages.map(([lang, count]) => `
-          <span class="lang-pill">${lang} (${count})</span>
-        `).join('');
-      } else {
-        languageContainer.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No hay datos de lenguajes</p>';
+      if (type !== 'error') {
+        setTimeout(() => {
+          statusEl.style.display = 'none';
+        }, 5000);
       }
     }
 
     // ===== MANEJAR ENVÍO DEL FORMULARIO CON FORMSPREE =====
     function initContactForm() {
       const form = document.getElementById('contactForm');
+      if (!form) return;
       
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -666,24 +1208,22 @@
         const message = document.getElementById('message').value.trim();
         
         if (!name || !email || !subject || !message) {
-          alert('⚠️ Por favor, completa todos los campos');
+          showFormMessage('warning', t('contact.formWarningFill'), 'fas fa-exclamation-circle');
           return;
         }
         
         if (!email.includes('@') || !email.includes('.')) {
-          alert('📧 Por favor, introduce un email válido');
+          showFormMessage('warning', t('contact.formWarningEmail'), 'fas fa-envelope-open-text');
           return;
         }
         
         // Cambiar estado del botón
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        submitBtn.innerHTML = t('contact.formSending');
         submitBtn.disabled = true;
         
-        // Recoger datos del formulario
         const formData = new FormData(form);
         
         try {
-          // Enviar a Formspree
           const response = await fetch(form.action, {
             method: 'POST',
             body: formData,
@@ -693,10 +1233,10 @@
           });
           
           if (response.ok) {
-            // Éxito
-            submitBtn.innerHTML = '<i class="fas fa-check"></i> ¡Mensaje enviado!';
+            submitBtn.innerHTML = t('contact.formSent');
             submitBtn.style.background = '#4CAF50';
             form.reset();
+            showFormMessage('success', t('contact.formSuccess'), 'fas fa-check-circle');
             
             setTimeout(() => {
               submitBtn.innerHTML = originalText;
@@ -704,23 +1244,19 @@
               submitBtn.disabled = false;
             }, 3000);
           } else {
-            // Error del servidor
             throw new Error('Error al enviar');
           }
         } catch (error) {
           console.error('Error:', error);
-          
-          // Error
-          submitBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Error al enviar';
+          submitBtn.innerHTML = t('contact.formErrorBtn');
           submitBtn.style.background = '#f44336';
+          showFormMessage('error', t('contact.formError'), 'fas fa-exclamation-triangle');
           
           setTimeout(() => {
             submitBtn.innerHTML = originalText;
             submitBtn.style.background = '';
             submitBtn.disabled = false;
           }, 3000);
-          
-          alert('Hubo un error. Puedes escribirme directamente a yasllanyan@gmail.com');
         }
       });
     }
@@ -729,21 +1265,40 @@
     async function init() {
       initWelcomeAnimation();
       initTheme();
+      setLanguage(currentLang);
+      initLanguageToggle();
 
-      // Cargar repositorios
-      allRepos = await fetchRepos();
-      renderFeatured(allRepos);
-      renderRepos();
-      
-      // Cargar estadísticas de GitHub
-      await renderGitHubStats();
+      // Cargar datos unificados con caché (evita rate limiting de GitHub)
+      const data = await getGitHubData();
+      if (data) {
+        allRepos = data.repos || [];
+        renderFeatured(allRepos);
+        renderRepos();
+        renderGitHubStats(data.stats);
+      } else {
+        renderFeatured([]);
+        renderRepos();
+        renderGitHubStats(null);
+      }
 
       // Inicializar formulario de contacto
       initContactForm();
 
-      // Event listeners
-      document.getElementById('q').addEventListener('input', renderRepos);
-      document.getElementById('sort').addEventListener('change', renderRepos);
+      // Inicializar spotlight y tilt 3D en las tarjetas
+      initSpotlightCards();
+
+      // Inicializar reloj en vivo
+      initLiveClock();
+
+      // Inicializar scrollspy y scroll-to-top
+      initScrollspy();
+      initScrollToTop();
+
+      // Event listeners para filtros
+      const searchEl = document.getElementById('q');
+      const sortEl = document.getElementById('sort');
+      if (searchEl) searchEl.addEventListener('input', renderRepos);
+      if (sortEl) sortEl.addEventListener('change', renderRepos);
       
       document.querySelectorAll('[data-topic]').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -753,9 +1308,123 @@
           renderRepos();
         });
       });
-      
-      // Actualizar estadísticas cada 5 minutos
-      setInterval(renderGitHubStats, 300000);
+    }
+
+    // ===== EFECTO SPOTLIGHT & 3D TILT EN TARJETAS =====
+    function initSpotlightCards() {
+      const isTouch = window.matchMedia('(hover: none)').matches || 'ontouchstart' in window;
+      const cards = document.querySelectorAll('.feature-card, .skill-category-card, .focus-item, .stat-card, .github-languages-panel, .bento-card');
+
+      cards.forEach(card => {
+        if (card.dataset.spotlightInitialized) return;
+        card.dataset.spotlightInitialized = 'true';
+        card.classList.add('spotlight-card');
+
+        let isHovered = false;
+        let animationFrame = null;
+
+        card.addEventListener('mouseenter', () => {
+          isHovered = true;
+        });
+
+        card.addEventListener('mousemove', (e) => {
+          if (!isHovered) return;
+
+          if (animationFrame) cancelAnimationFrame(animationFrame);
+
+          animationFrame = requestAnimationFrame(() => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+
+            if (!isTouch) {
+              const centerX = rect.width / 2;
+              const centerY = rect.height / 2;
+              const rotateX = ((y - centerY) / centerY) * -5;
+              const rotateY = ((x - centerX) / centerX) * 5;
+
+              card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-5px)`;
+            }
+          });
+        });
+
+        card.addEventListener('mouseleave', () => {
+          isHovered = false;
+          if (animationFrame) cancelAnimationFrame(animationFrame);
+
+          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+          card.style.removeProperty('--mouse-x');
+          card.style.removeProperty('--mouse-y');
+        });
+      });
+    }
+
+    // ===== RELOJ EN VIVO (ZONA CANARIAS / WET) =====
+    function initLiveClock() {
+      const clockEl = document.getElementById('liveClock');
+      if (!clockEl) return;
+
+      function updateClock() {
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('es-ES', {
+          timeZone: 'Atlantic/Canary',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        });
+        clockEl.textContent = timeStr;
+      }
+
+      updateClock();
+      setInterval(updateClock, 1000);
+    }
+
+    // ===== SCROLLSPY (SECCIÓN ACTIVA EN MENÚ) =====
+    function initScrollspy() {
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.fixed-menu a');
+      if (sections.length === 0 || navLinks.length === 0) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+              link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+            });
+          }
+        });
+      }, {
+        rootMargin: '-20% 0px -65% 0px',
+        threshold: 0
+      });
+
+      sections.forEach(section => observer.observe(section));
+    }
+
+    // ===== BOTÓN VOLVER ARRIBA =====
+    function initScrollToTop() {
+      const btn = document.getElementById('scrollToTop');
+      if (!btn) return;
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 350) {
+          btn.classList.add('visible');
+        } else {
+          btn.classList.remove('visible');
+        }
+      }, { passive: true });
+
+      btn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
     }
 
     // Smooth scroll para los enlaces del menú
