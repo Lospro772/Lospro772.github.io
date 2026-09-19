@@ -132,16 +132,68 @@
         </div>
 
         <div class="profile-image-container fade-in-right">
-          <div class="profile-card-wrapper">
+          <!-- Panel 1: Foto de perfil -->
+          <div class="hero-view-panel active" id="panelHeroPhoto">
             <div class="profile-frame">
               <div class="profile-ring"></div>
               <img src="assets/img/perfil.png" alt="Yasiel Llanos" class="profile-image" onerror="this.src='https://via.placeholder.com/400x400?text=Yasiel+Llanos'">
               <div class="profile-glow"></div>
             </div>
-            <div class="profile-status-badge">
-              <span class="status-pulse"></span>
-              <span data-i18n="hero.status">Disponible para prácticas FCT / Dual</span>
+          </div>
+
+          <!-- Panel 2: Terminal Interactiva -->
+          <div class="hero-view-panel hidden" id="panelHeroTerminal">
+            <div class="terminal-window spotlight-card">
+              <div class="terminal-topbar">
+                <div class="terminal-traffic-lights">
+                  <span class="traffic-light red" id="termCloseBtn" title="Volver a perfil"></span>
+                  <span class="traffic-light yellow" id="termMinBtn" title="Limpiar terminal"></span>
+                  <span class="traffic-light green" id="termMaxBtn" title="Comando help"></span>
+                </div>
+                <div class="terminal-title">
+                  <i class="fas fa-terminal"></i> yasiel@dam-portfolio:~
+                </div>
+                <div class="terminal-actions">
+                  <button class="terminal-action-btn" id="termCopyBtn" title="Copiar salida"><i class="fas fa-copy"></i></button>
+                </div>
+              </div>
+              <div class="terminal-body" id="terminalBody">
+                <div class="terminal-line info">Bienvenido a la terminal de Yasiel Llanos [2º DAM]</div>
+                <div class="terminal-line">Escribe <strong style="color:var(--accent-primary)">help</strong> o usa los accesos directos para explorar.</div>
+                <div class="terminal-line" style="margin-top: 0.2rem;"></div>
+              </div>
+              <div class="terminal-input-row" style="padding: 0 1rem 0.6rem 1rem;">
+                <span class="terminal-prompt">yasiel@dam:~$</span>
+                <input type="text" id="terminalInput" class="terminal-input" placeholder="help, skills, projects..." autocomplete="off" spellcheck="false" />
+              </div>
+              <!-- Chips de comandos rápidos -->
+              <div class="terminal-chips">
+                <button class="chip-btn" data-cmd="help">help</button>
+                <button class="chip-btn" data-cmd="skills">skills</button>
+                <button class="chip-btn" data-cmd="projects">projects</button>
+                <button class="chip-btn" data-cmd="about">about</button>
+                <button class="chip-btn" data-cmd="contact">contact</button>
+                <button class="chip-btn" data-cmd="theme">theme</button>
+                <button class="chip-btn" data-cmd="clear">clear</button>
+              </div>
             </div>
+          </div>
+
+          <!-- Conmutador de vista: debajo de la foto y encima de las prácticas -->
+          <div class="hero-switcher">
+            <button class="hero-switcher-btn active" id="btnHeroPhoto" title="Ver perfil">
+              <i class="fas fa-user"></i> <span data-i18n="hero.tabPhoto">Perfil</span>
+            </button>
+            <button class="hero-switcher-btn" id="btnHeroTerminal" title="Abrir terminal interactiva">
+              <i class="fas fa-terminal"></i> <span data-i18n="hero.tabTerminal">Terminal</span>
+              <span class="terminal-live-dot"></span>
+            </button>
+          </div>
+
+          <!-- Badge de disponibilidad: debajo del conmutador -->
+          <div class="profile-status-badge">
+            <span class="status-pulse"></span>
+            <span data-i18n="hero.status">Disponible para prácticas FCT / Dual</span>
           </div>
         </div>
       </div>
@@ -571,6 +623,8 @@
         'hero.focus3.title': 'Bases de Datos',
         'hero.focus3.sub': 'PostgreSQL · SQL',
         'hero.status': 'Disponible para prácticas FCT / Dual',
+        'hero.tabPhoto': 'Perfil',
+        'hero.tabTerminal': 'Terminal',
         'skills.title': 'Habilidades y Stack Técnico',
         'skills.desc': 'Tecnologías, herramientas y metodologías aplicadas en mis proyectos',
         'skills.cat1.title': 'Backend & Lógica',
@@ -688,6 +742,8 @@
         'hero.focus3.title': 'Databases',
         'hero.focus3.sub': 'PostgreSQL · SQL',
         'hero.status': 'Available for FCT / Dual internships',
+        'hero.tabPhoto': 'Profile',
+        'hero.tabTerminal': 'Terminal',
         'skills.title': 'Skills & Technical Stack',
         'skills.desc': 'Technologies, tools, and methodologies applied across my projects',
         'skills.cat1.title': 'Backend & Logic',
@@ -1290,6 +1346,9 @@
       // Inicializar reloj en vivo
       initLiveClock();
 
+      // Inicializar terminal interactiva
+      initTerminal();
+
       // Inicializar scrollspy y scroll-to-top
       initScrollspy();
       initScrollToTop();
@@ -1381,6 +1440,221 @@
 
       updateClock();
       setInterval(updateClock, 1000);
+    }
+
+    // ===== TERMINAL INTERACTIVA =====
+    function initTerminal() {
+      const btnPhoto = document.getElementById('btnHeroPhoto');
+      const btnTerminal = document.getElementById('btnHeroTerminal');
+      const panelPhoto = document.getElementById('panelHeroPhoto');
+      const panelTerminal = document.getElementById('panelHeroTerminal');
+      const input = document.getElementById('terminalInput');
+      const body = document.getElementById('terminalBody');
+      const termClose = document.getElementById('termCloseBtn');
+      const termMin = document.getElementById('termMinBtn');
+      const termMax = document.getElementById('termMaxBtn');
+      const termCopy = document.getElementById('termCopyBtn');
+
+      if (!btnPhoto || !btnTerminal || !panelPhoto || !panelTerminal || !input || !body) return;
+
+      let history = [];
+      let historyIndex = -1;
+      let initialTyped = false;
+
+      function switchView(view) {
+        if (view === 'terminal') {
+          panelPhoto.classList.remove('active');
+          panelPhoto.classList.add('hidden');
+          panelTerminal.classList.remove('hidden');
+          panelTerminal.classList.add('active');
+          btnTerminal.classList.add('active');
+          btnPhoto.classList.remove('active');
+          input.focus();
+
+          if (!initialTyped) {
+            initialTyped = true;
+            runInitialTyping();
+          }
+        } else {
+          panelTerminal.classList.remove('active');
+          panelTerminal.classList.add('hidden');
+          panelPhoto.classList.remove('hidden');
+          panelPhoto.classList.add('active');
+          btnPhoto.classList.add('active');
+          btnTerminal.classList.remove('active');
+        }
+      }
+
+      btnPhoto.addEventListener('click', () => switchView('photo'));
+      btnTerminal.addEventListener('click', () => switchView('terminal'));
+      if (termClose) termClose.addEventListener('click', () => switchView('photo'));
+      if (termMin) termMin.addEventListener('click', () => executeCommand('clear'));
+      if (termMax) termMax.addEventListener('click', () => executeCommand('help'));
+      
+      if (termCopy) {
+        termCopy.addEventListener('click', () => {
+          const text = body.innerText;
+          navigator.clipboard.writeText(text).then(() => {
+            appendLine('info', '✓ Contenido de la terminal copiado al portapapeles.');
+          });
+        });
+      }
+
+      function appendLine(type, text) {
+        const line = document.createElement('div');
+        line.className = `terminal-line ${type}`;
+        line.innerHTML = text;
+        body.appendChild(line);
+        body.scrollTop = body.scrollHeight;
+      }
+
+      function executeCommand(rawCmd) {
+        const cmd = rawCmd.trim();
+        if (!cmd) return;
+
+        history.push(cmd);
+        historyIndex = history.length;
+
+        appendLine('cmd', `<span class="terminal-prompt">yasiel@dam:~$</span> ${escapeHtml(cmd)}`);
+
+        const lower = cmd.toLowerCase();
+        switch (lower) {
+          case 'help':
+            appendLine('info', '<strong>Comandos disponibles:</strong>');
+            appendLine('text', '  • <span style="color:#ff8a5c">skills</span>    - Stack técnico detallado');
+            appendLine('text', '  • <span style="color:#ff8a5c">projects</span>  - Proyectos principales y repositorios');
+            appendLine('text', '  • <span style="color:#ff8a5c">about</span>     - Perfil profesional y formación DAM');
+            appendLine('text', '  • <span style="color:#ff8a5c">contact</span>   - Información de contacto (Email, LinkedIn, GitHub)');
+            appendLine('text', '  • <span style="color:#ff8a5c">theme</span>     - Alternar entre modo oscuro y claro');
+            appendLine('text', '  • <span style="color:#ff8a5c">date</span>      - Fecha y hora actual en Canarias');
+            appendLine('text', '  • <span style="color:#ff8a5c">whoami</span>    - Identidad del visitante');
+            appendLine('text', '  • <span style="color:#ff8a5c">clear</span>     - Limpiar pantalla');
+            appendLine('text', '  • <span style="color:#ff8a5c">exit</span>      - Volver a la vista de perfil');
+            break;
+
+          case 'skills':
+            appendLine('success', '⚡ <strong>Stack Técnico:</strong>');
+            appendLine('text', '  [Backend]  Java (Streams, Threads, POO), Spring Boot (APIs REST), Maven');
+            appendLine('text', '  [Database] PostgreSQL, MySQL, Modelado relacional, Consultas SQL');
+            appendLine('text', '  [Frontend] HTML5 semántico, CSS3 moderno, JavaScript Vanilla');
+            appendLine('text', '  [Mobile]   Android Studio, JavaFX');
+            appendLine('text', '  [DevOps]   Git, GitHub, Linux / WSL, Docker');
+            break;
+
+          case 'projects':
+            appendLine('success', '🚀 <strong>Proyectos destacados:</strong>');
+            appendLine('text', '  1. <strong>CrystalCoins</strong>: Plugin de economía y recompensas en Java con MySQL y Webhooks.');
+            appendLine('text', '  2. <strong>Web Portfolio</strong>: SPA moderna con i18n, GitHub API caché y temas claro/oscuro.');
+            appendLine('info', '  👉 Escribe <strong>github</strong> para abrir mis repositorios completos.');
+            break;
+
+          case 'github':
+            appendLine('info', 'Abriendo GitHub (@Lospro772)...');
+            window.open('https://github.com/Lospro772', '_blank');
+            break;
+
+          case 'about':
+            appendLine('info', '👨‍💻 <strong>Yasiel Llanos Yanes</strong>');
+            appendLine('text', 'Estudiante de 2º de DAM en IES Puerto de la Cruz Telesforo Bravo.');
+            appendLine('text', 'Especializado en backend, lógica de negocio y arquitectura limpia.');
+            appendLine('success', '🟢 Disponible para prácticas FCT / Dual e incorporaciones junior.');
+            break;
+
+          case 'contact':
+            appendLine('info', '📬 <strong>Información de contacto:</strong>');
+            appendLine('text', '  • Email:    <a href="mailto:yasllanyan@gmail.com" style="color:#ff8a5c">yasllanyan@gmail.com</a>');
+            appendLine('text', '  • GitHub:   <a href="https://github.com/Lospro772" target="_blank" style="color:#ff8a5c">github.com/Lospro772</a>');
+            appendLine('text', '  • LinkedIn: <a href="https://linkedin.com" target="_blank" style="color:#ff8a5c">linkedin.com</a>');
+            appendLine('text', '  • Ubicación: Tenerife, Islas Canarias');
+            break;
+
+          case 'theme':
+            const themeToggle = document.getElementById('themeToggle');
+            if (themeToggle) {
+              themeToggle.click();
+              appendLine('success', '✓ Tema cambiado correctamente.');
+            }
+            break;
+
+          case 'date':
+            const now = new Date().toLocaleString('es-ES', { timeZone: 'Atlantic/Canary' });
+            appendLine('info', `📅 Hora local Canarias: ${now}`);
+            break;
+
+          case 'whoami':
+            appendLine('info', '🕵️ Visitante curioso / Futuro reclutador o compañero de desarrollo.');
+            break;
+
+          case 'clear':
+            body.innerHTML = '';
+            break;
+
+          case 'exit':
+            switchView('photo');
+            break;
+
+          default:
+            if (lower.startsWith('sudo')) {
+              appendLine('error', '🔒 Permiso denegado: este intento no autorizado ha sido reportado a Yasiel 🛡️');
+            } else {
+              appendLine('warning', `Comando no reconocido: '${escapeHtml(cmd)}'. Escribe <span style="color:#ff8a5c">help</span>.`);
+            }
+            break;
+        }
+
+        input.value = '';
+      }
+
+      function escapeHtml(str) {
+        return str.replace(/[&<>'"]/g, 
+          tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+        );
+      }
+
+      function runInitialTyping() {
+        const lines = [
+          { type: 'cmd', text: '<span class="terminal-prompt">yasiel@dam:~$</span> cat about.json' },
+          { type: 'info', text: '{\n  "developer": "Yasiel Llanos",\n  "role": "Backend & 2º DAM",\n  "skills": ["Java", "Spring Boot", "SQL", "Android"],\n  "status": "Ready for FCT"\n}' },
+          { type: 'text', text: 'Escribe <strong style="color:#ff8a5c">help</strong> para ver todos los comandos.' }
+        ];
+
+        let index = 0;
+        function next() {
+          if (index < lines.length) {
+            appendLine(lines[index].type, lines[index].text.replace(/\n/g, '<br>'));
+            index++;
+            setTimeout(next, 350);
+          }
+        }
+        setTimeout(next, 200);
+      }
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          executeCommand(input.value);
+        } else if (e.key === 'ArrowUp') {
+          if (history.length > 0 && historyIndex > 0) {
+            historyIndex--;
+            input.value = history[historyIndex];
+          }
+        } else if (e.key === 'ArrowDown') {
+          if (historyIndex < history.length - 1) {
+            historyIndex++;
+            input.value = history[historyIndex];
+          } else {
+            historyIndex = history.length;
+            input.value = '';
+          }
+        }
+      });
+
+      // Quick chips buttons
+      document.querySelectorAll('.chip-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cmd = btn.dataset.cmd;
+          if (cmd) executeCommand(cmd);
+        });
+      });
     }
 
     // ===== SCROLLSPY (SECCIÓN ACTIVA EN MENÚ) =====
