@@ -14,7 +14,7 @@
   <link rel="shortcut icon" href="assets/img/favicon.svg">
   
   <!-- Estilos base (siempre se carga) -->
-  <link rel="stylesheet" href="assets/css/base.css?v=2">
+  <link rel="stylesheet" href="assets/css/base.css?v=5">
   <!-- Tema (cambia entre dark/light) -->
   <link id="theme-style" rel="stylesheet" href="assets/css/dark-theme.css">
   
@@ -372,6 +372,9 @@
 
       <div class="timeline-container">
         <div class="timeline">
+          <!-- Haz de luz de progreso reactivo al scroll -->
+          <div class="timeline-progress-bar" id="timelineProgressBar"></div>
+
           <!-- 2026 - Actualidad -->
           <div class="timeline-item fade-in-up">
             <div class="timeline-dot"></div>
@@ -1349,6 +1352,9 @@
       // Inicializar terminal interactiva
       initTerminal();
 
+      // Inicializar trazado de luz en la línea de tiempo
+      initTimelineProgress();
+
       // Inicializar scrollspy y scroll-to-top
       initScrollspy();
       initScrollToTop();
@@ -1655,6 +1661,75 @@
           if (cmd) executeCommand(cmd);
         });
       });
+    }
+
+    // ===== TRAZADO DE LUZ EN LÍNEA DE TIEMPO =====
+    function initTimelineProgress() {
+      const timeline = document.querySelector('.timeline');
+      const progressBar = document.getElementById('timelineProgressBar');
+      const items = document.querySelectorAll('.timeline-item');
+      if (!timeline || !progressBar || items.length === 0) return;
+
+      let ticking = false;
+
+      function updateProgress() {
+        const firstItem = items[0];
+        const lastItem = items[items.length - 1];
+        const firstDot = firstItem.querySelector('.timeline-dot');
+        const lastDot = lastItem.querySelector('.timeline-dot');
+        if (!firstDot || !lastDot) return;
+
+        // Centros exactos de los círculos respecto al contenedor .timeline
+        const firstDotCenter = firstItem.offsetTop + firstDot.offsetTop + (firstDot.offsetHeight / 2);
+        const lastDotCenter = lastItem.offsetTop + lastDot.offsetTop + (lastDot.offsetHeight / 2);
+        const maxDistance = Math.max(0, lastDotCenter - firstDotCenter);
+
+        timeline.style.setProperty('--first-dot-y', `${firstDotCenter}px`);
+        timeline.style.setProperty('--track-height', `${maxDistance}px`);
+
+        const firstDotRect = firstDot.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // Comienza cuando el primer círculo llega al 68% de la pantalla
+        const startTrigger = windowHeight * 0.68;
+        const currentScrolled = startTrigger - firstDotRect.top;
+
+        // Limita la distancia exacta entre 0 y maxDistance (nunca sobrepasa el último círculo)
+        const distance = Math.max(0, Math.min(maxDistance, currentScrolled));
+
+        progressBar.style.top = `${firstDotCenter}px`;
+        progressBar.style.height = `${distance}px`;
+
+        // Activar cada hito cuando el haz de luz lo alcanza
+        items.forEach(item => {
+          const dot = item.querySelector('.timeline-dot');
+          if (!dot) return;
+          const dotRect = dot.getBoundingClientRect();
+          if (dotRect.top <= startTrigger + 10) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+
+        ticking = false;
+      }
+
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(updateProgress);
+          ticking = true;
+        }
+      }, { passive: true });
+
+      window.addEventListener('resize', () => {
+        if (!ticking) {
+          requestAnimationFrame(updateProgress);
+          ticking = true;
+        }
+      }, { passive: true });
+
+      updateProgress();
     }
 
     // ===== SCROLLSPY (SECCIÓN ACTIVA EN MENÚ) =====
