@@ -279,3 +279,14 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== PROYECTOS DESTACADOS EN MODO OSCURO ===== */
+.showcase-card {
+  background: linear-gradient(175deg, #202020 0%, #151515 100%);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.showcase-window-bar {
+  background: rgba(26, 26, 26, 0.95);
+  border-bottom-color: rgba(255, 255, 255, 0.07);
+}

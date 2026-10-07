@@ -280,3 +280,14 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== PROYECTOS DESTACADOS EN MODO CLARO ===== */
+.showcase-card {
+  background: linear-gradient(175deg, #ffffff 0%, #fff7f2 100%);
+  border-color: #ffd8c4;
+}
+
+.showcase-window-bar {
+  background: #fff0e5;
+  border-bottom-color: #ffd8c4;
+}

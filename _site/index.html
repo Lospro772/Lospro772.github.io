@@ -35,7 +35,7 @@
   <link rel="shortcut icon" href="assets/img/favicon.svg">
   
   <!-- Estilos base (siempre se carga) -->
-  <link rel="stylesheet" href="assets/css/base.css?v=6">
+  <link rel="stylesheet" href="assets/css/base.css?v=7">
   <!-- Tema (cambia entre dark/light) -->
   <link id="theme-style" rel="stylesheet" href="assets/css/dark-theme.css">
   
@@ -470,7 +470,7 @@
       <p class="section-description fade-in-up" data-i18n="featured.desc">
         Repositorios con topic <strong>"showcase"</strong> en GitHub
       </p>
-      <div id="featured" class="cards-grid"></div>
+      <div id="featured" class="featured-grid"></div>
     </section>
 
     <!-- REPOSITORIOS SECTION -->
@@ -705,8 +705,10 @@
         'featured.emptyTitle': 'No hay repositorios disponibles',
         'featured.emptyDesc': 'Conéctate a internet o revisa tu perfil de GitHub',
         'featured.btnRepo': '<i class="fab fa-github"></i> Ver repositorio',
+        'featured.btnDemo': '<i class="fas fa-arrow-up-right-from-square"></i> Demo en vivo',
         'featured.badgeProject': '<i class="fas fa-sparkles"></i> Proyecto',
         'featured.badgeShowcase': '<i class="fas fa-award"></i> Showcase',
+        'featured.noDescription': 'Aplicación desarrollada con buenas prácticas y arquitectura limpia.',
         'repos.title': 'Repositorios',
         'repos.search': '🔍 Buscar repositorios...',
         'repos.sortRecent': '📅 Más recientes',
@@ -824,8 +826,10 @@
         'featured.emptyTitle': 'No repositories available',
         'featured.emptyDesc': 'Connect to the internet or check your GitHub profile',
         'featured.btnRepo': '<i class="fab fa-github"></i> View repository',
+        'featured.btnDemo': '<i class="fas fa-arrow-up-right-from-square"></i> Live Demo',
         'featured.badgeProject': '<i class="fas fa-sparkles"></i> Project',
         'featured.badgeShowcase': '<i class="fas fa-award"></i> Showcase',
+        'featured.noDescription': 'Application built following best practices and clean architecture.',
         'repos.title': 'Repositories',
         'repos.search': '🔍 Search repositories...',
         'repos.sortRecent': '📅 Most recent',
@@ -1083,6 +1087,42 @@
       }
     }
 
+    function getRepoShowcaseMeta(repo) {
+      const lang = (repo.language || '').toLowerCase();
+      const topics = (repo.topics || []).map(t => t.toLowerCase());
+
+      let icon = 'fas fa-layer-group';
+      let categoryEs = 'Proyecto Software';
+      let categoryEn = 'Software Project';
+
+      if (lang === 'java' || topics.includes('java') || topics.includes('backend') || topics.includes('spring')) {
+        icon = 'fab fa-java';
+        categoryEs = 'Backend & Java';
+        categoryEn = 'Backend & Java';
+      } else if (lang === 'html' || lang === 'css' || lang === 'javascript' || lang === 'typescript' || topics.includes('web') || topics.includes('frontend')) {
+        icon = 'fab fa-html5';
+        categoryEs = 'Aplicación Web & Frontend';
+        categoryEn = 'Web App & Frontend';
+      } else if (lang === 'python' || topics.includes('python')) {
+        icon = 'fab fa-python';
+        categoryEs = 'Python & Automatización';
+        categoryEn = 'Python & Automation';
+      } else if (topics.includes('android') || topics.includes('mobile')) {
+        icon = 'fab fa-android';
+        categoryEs = 'Desarrollo Móvil';
+        categoryEn = 'Mobile Development';
+      } else if (topics.includes('database') || topics.includes('sql')) {
+        icon = 'fas fa-database';
+        categoryEs = 'Bases de Datos & SQL';
+        categoryEn = 'Databases & SQL';
+      }
+
+      return {
+        icon,
+        category: currentLang === 'en' ? categoryEn : categoryEs
+      };
+    }
+
     function renderFeatured(repos) {
       let featured = repos.filter(r => r.topics.includes(FEATURED_TOPIC)).slice(0, 6);
       const container = document.getElementById('featured');
@@ -1091,12 +1131,12 @@
       // Fallback elegante si aún no hay repos con topic showcase: mostrar los más recientes/populares
       const isFallback = featured.length === 0;
       if (isFallback) {
-        featured = [...repos].sort((a, b) => b.stargazers_count - a.stargazers_count || new Date(b.updated_at) - new Date(a.updated_at)).slice(0, 3);
+        featured = [...repos].sort((a, b) => b.stargazers_count - a.stargazers_count || new Date(b.updated_at) - new Date(a.updated_at)).slice(0, 4);
       }
 
       if (featured.length === 0) {
         container.innerHTML = `
-          <div class="feature-card" style="grid-column: 1/-1; text-align: center;">
+          <div class="showcase-card" style="grid-column: 1/-1; text-align: center; padding: 3rem 2rem;">
             <i class="fas fa-folder-open" style="font-size: 3rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
             <h3>${t('featured.emptyTitle')}</h3>
             <p>${t('featured.emptyDesc')}</p>
@@ -1107,29 +1147,95 @@
 
       container.innerHTML = featured.map((repo, idx) => {
         const langColor = LANGUAGE_COLORS[repo.language] || 'var(--accent-primary)';
-        const delay = Math.min(idx * 0.05, 0.3);
+        const delay = Math.min(idx * 0.08, 0.4);
+        const meta = getRepoShowcaseMeta(repo);
+        const displayTopics = (repo.topics || []).filter(tp => tp.toLowerCase() !== FEATURED_TOPIC);
+        const badgeLabel = isFallback ? t('featured.badgeProject') : t('featured.badgeShowcase');
+        const descriptionText = repo.description || t('featured.noDescription');
+
         return `
-        <div class="feature-card repo-card-animate" style="animation-delay: ${delay}s;">
-          <div class="card-header">
-            <div class="card-icon" style="margin-bottom: 0;">
-              <i class="fas fa-star"></i>
+        <article class="showcase-card repo-card-animate" style="animation-delay: ${delay}s;">
+          <div class="showcase-top-beam"></div>
+          
+          <!-- Cabecera estilo ventana de aplicación -->
+          <div class="showcase-window-bar">
+            <div class="showcase-window-controls" aria-hidden="true">
+              <span class="window-dot window-dot-red"></span>
+              <span class="window-dot window-dot-yellow"></span>
+              <span class="window-dot window-dot-green"></span>
             </div>
-            ${isFallback ? `<span class="badge-featured">${t('featured.badgeProject')}</span>` : `<span class="badge-featured">${t('featured.badgeShowcase')}</span>`}
+            
+            <div class="showcase-window-tab" title="Lospro772/${repo.name}">
+              <i class="fas fa-terminal"></i>
+              <span>Lospro772/${repo.name}</span>
+            </div>
+
+            <div class="showcase-badge-wrap">
+              <span class="showcase-status-badge">
+                <span class="showcase-pulse-dot"></span>
+                ${badgeLabel}
+              </span>
+            </div>
           </div>
-          <h3>${repo.name}</h3>
-          <p>${repo.description}</p>
-          <div class="card-meta">
-            <span class="lang-tag"><span class="lang-dot" style="background-color: ${langColor};"></span> ${repo.language}</span>
-            <span><i class="fas fa-star"></i> ${repo.stargazers_count}</span>
-            <span><i class="fas fa-calendar"></i> ${formatDate(repo.updated_at)}</span>
+
+          <!-- Contenido del Showcase -->
+          <div class="showcase-content">
+            <div class="showcase-hero-row">
+              <div class="showcase-icon-box" aria-hidden="true">
+                <i class="${meta.icon}"></i>
+              </div>
+              <div class="showcase-headings">
+                <div class="showcase-category">
+                  <i class="fas fa-code" style="font-size: 0.72rem;"></i>
+                  ${meta.category}
+                </div>
+                <h3 class="showcase-title">
+                  <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer">
+                    ${repo.name}
+                    <i class="fas fa-arrow-up-right-from-square title-external-icon"></i>
+                  </a>
+                </h3>
+              </div>
+            </div>
+
+            <p class="showcase-description">${descriptionText}</p>
+
+            <div class="showcase-tech-stack">
+              ${repo.language ? `
+                <span class="tech-pill-primary">
+                  <span class="lang-dot" style="background-color: ${langColor};"></span>
+                  <strong>${repo.language}</strong>
+                </span>
+              ` : ''}
+              ${displayTopics.map(tp => `<span class="tech-pill">${tp}</span>`).join('')}
+            </div>
+
+            <div class="showcase-footer">
+              <div class="showcase-stats">
+                <span class="stat-item" title="Estrellas">
+                  <i class="fas fa-star" style="color: #f1c40f;"></i> ${repo.stargazers_count}
+                </span>
+                <span class="stat-item" title="Forks">
+                  <i class="fas fa-code-fork"></i> ${repo.forks_count || 0}
+                </span>
+                <span class="stat-item" title="Fecha">
+                  <i class="far fa-calendar-alt"></i> ${formatDate(repo.updated_at)}
+                </span>
+              </div>
+
+              <div class="showcase-actions">
+                ${repo.homepage ? `
+                  <a href="${repo.homepage}" target="_blank" rel="noopener noreferrer" class="btn-showcase-demo">
+                    ${t('featured.btnDemo')}
+                  </a>
+                ` : ''}
+                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="btn-showcase-primary">
+                  ${t('featured.btnRepo')}
+                </a>
+              </div>
+            </div>
           </div>
-          <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem;">
-            ${repo.topics.slice(0, 3).map(t => `<span class="tech-pill" style="font-size: 0.8rem;">${t}</span>`).join('')}
-          </div>
-          <a href="${repo.html_url}" target="_blank" class="btn btn-outline" style="margin-top: 1.5rem; width: 100%; justify-content: center;">
-            ${t('featured.btnRepo')}
-          </a>
-        </div>
+        </article>
       `;
       }).join('');
       initSpotlightCards();
@@ -1401,7 +1507,7 @@
     // ===== EFECTO SPOTLIGHT & 3D TILT EN TARJETAS =====
     function initSpotlightCards() {
       const isTouch = window.matchMedia('(hover: none)').matches || 'ontouchstart' in window;
-      const cards = document.querySelectorAll('.feature-card, .skill-category-card, .focus-item, .stat-card, .github-languages-panel, .bento-card');
+      const cards = document.querySelectorAll('.feature-card, .showcase-card, .skill-category-card, .focus-item, .stat-card, .github-languages-panel, .bento-card');
 
       cards.forEach(card => {
         if (card.dataset.spotlightInitialized) return;
