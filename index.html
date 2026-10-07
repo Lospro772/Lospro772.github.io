@@ -35,7 +35,7 @@
   <link rel="shortcut icon" href="assets/img/favicon.svg">
   
   <!-- Estilos base (siempre se carga) -->
-  <link rel="stylesheet" href="assets/css/base.css?v=7">
+  <link rel="stylesheet" href="assets/css/base.css?v=8">
   <!-- Tema (cambia entre dark/light) -->
   <link id="theme-style" rel="stylesheet" href="assets/css/dark-theme.css">
   
@@ -602,6 +602,42 @@
   <script>
     const GITHUB_USERNAME = "Lospro772";
     const FEATURED_TOPIC = "showcase";
+    const FEATURED_PROJECT_IMAGES = {
+      'Academia-APP': [
+        {
+          url: 'https://raw.githubusercontent.com/Lospro772/Academia-APP/main/images/alumnos-dam.png',
+          caption: 'Gestión y listado de alumnos',
+          captionEn: 'Student management and listing'
+        },
+        {
+          url: 'https://raw.githubusercontent.com/Lospro772/Academia-APP/main/images/capas.png',
+          caption: 'Arquitectura por capas del sistema',
+          captionEn: 'Layered system architecture'
+        },
+        {
+          url: 'https://raw.githubusercontent.com/Lospro772/Academia-APP/main/images/poo.png',
+          caption: 'Diseño modular orientado a objetos',
+          captionEn: 'Object-oriented modular design'
+        },
+        {
+          url: 'https://raw.githubusercontent.com/Lospro772/Academia-APP/main/images/test.png',
+          caption: 'Batería de pruebas y validación',
+          captionEn: 'Testing suite and validation'
+        }
+      ],
+      'Docencia-APP': [
+        {
+          url: 'https://raw.githubusercontent.com/Lospro772/Docencia-APP/main/images/pantalla-app.png',
+          caption: 'Panel principal de la aplicación',
+          captionEn: 'Main application dashboard'
+        },
+        {
+          url: 'https://raw.githubusercontent.com/Lospro772/Docencia-APP/main/images/logo-app.png',
+          caption: 'Módulos y arquitectura de la solución',
+          captionEn: 'Solution modules and architecture'
+        }
+      ]
+    };
     const CACHE_KEY = "github_portfolio_cache";
     const CACHE_TTL = 30 * 60 * 1000; // 30 minutos
 
@@ -709,6 +745,10 @@
         'featured.badgeProject': '<i class="fas fa-sparkles"></i> Proyecto',
         'featured.badgeShowcase': '<i class="fas fa-award"></i> Showcase',
         'featured.noDescription': 'Aplicación desarrollada con buenas prácticas y arquitectura limpia.',
+        'featured.zoomImage': 'Ampliar captura',
+        'featured.prevImage': 'Imagen anterior',
+        'featured.nextImage': 'Imagen siguiente',
+        'featured.btnGallery': '<i class="fas fa-images"></i> Ver en grande',
         'repos.title': 'Repositorios',
         'repos.search': '🔍 Buscar repositorios...',
         'repos.sortRecent': '📅 Más recientes',
@@ -830,6 +870,10 @@
         'featured.badgeProject': '<i class="fas fa-sparkles"></i> Project',
         'featured.badgeShowcase': '<i class="fas fa-award"></i> Showcase',
         'featured.noDescription': 'Application built following best practices and clean architecture.',
+        'featured.zoomImage': 'Enlarge image',
+        'featured.prevImage': 'Previous image',
+        'featured.nextImage': 'Next image',
+        'featured.btnGallery': '<i class="fas fa-images"></i> View Fullsize',
         'repos.title': 'Repositories',
         'repos.search': '🔍 Search repositories...',
         'repos.sortRecent': '📅 Most recent',
@@ -1152,6 +1196,9 @@
         const displayTopics = (repo.topics || []).filter(tp => tp.toLowerCase() !== FEATURED_TOPIC);
         const badgeLabel = isFallback ? t('featured.badgeProject') : t('featured.badgeShowcase');
         const descriptionText = repo.description || t('featured.noDescription');
+        const projectImages = FEATURED_PROJECT_IMAGES[repo.name] || [];
+        const carouselId = `carousel-${repo.name.replace(/[^a-zA-Z0-9_-]/g, '')}`;
+        const hasImages = projectImages.length > 0;
 
         return `
         <article class="showcase-card repo-card-animate" style="animation-delay: ${delay}s;">
@@ -1177,6 +1224,50 @@
               </span>
             </div>
           </div>
+
+          ${hasImages ? `
+          <!-- Carrusel de capturas de la aplicación -->
+          <div id="${carouselId}" class="showcase-carousel" data-current-index="0">
+            <div class="carousel-slides-container">
+              ${projectImages.map((img, i) => {
+                const caption = currentLang === 'en' ? img.captionEn : img.caption;
+                return `
+                <img 
+                  src="${img.url}" 
+                  alt="${caption}" 
+                  loading="lazy" 
+                  class="carousel-slide ${i === 0 ? 'active' : ''}" 
+                  data-caption="${caption}"
+                  onclick="openProjectGallery('${repo.name}', ${i}, event)"
+                />
+              `;
+              }).join('')}
+            </div>
+
+            <button class="carousel-zoom-btn" title="${t('featured.zoomImage')}" aria-label="${t('featured.zoomImage')}" onclick="openProjectGallery('${repo.name}', parseInt(document.getElementById('${carouselId}').dataset.currentIndex || '0', 10), event)">
+              <i class="fas fa-expand"></i>
+            </button>
+
+            ${projectImages.length > 1 ? `
+              <button class="carousel-nav-btn carousel-btn-prev" aria-label="${t('featured.prevImage')}" onclick="changeCarouselSlide('${carouselId}', -1, event)">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="carousel-nav-btn carousel-btn-next" aria-label="${t('featured.nextImage')}" onclick="changeCarouselSlide('${carouselId}', 1, event)">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+              <div class="carousel-dots">
+                ${projectImages.map((_, i) => `
+                  <button class="carousel-dot ${i === 0 ? 'active' : ''}" aria-label="Imagen ${i + 1}" onclick="goToCarouselSlide('${carouselId}', ${i}, event)"></button>
+                `).join('')}
+              </div>
+            ` : ''}
+
+            <div class="carousel-caption-pill" onclick="openProjectGallery('${repo.name}', parseInt(document.getElementById('${carouselId}').dataset.currentIndex || '0', 10), event)" style="cursor: pointer;" title="${t('featured.zoomImage')}">
+              <span class="carousel-caption-text">${currentLang === 'en' ? projectImages[0].captionEn : projectImages[0].caption}</span>
+              <i class="fas fa-expand" style="margin-left: 6px; font-size: 0.7rem; opacity: 0.8;"></i>
+            </div>
+          </div>
+          ` : ''}
 
           <!-- Contenido del Showcase -->
           <div class="showcase-content">
@@ -1224,6 +1315,11 @@
               </div>
 
               <div class="showcase-actions">
+                ${hasImages ? `
+                  <button type="button" class="btn-showcase-gallery" onclick="openProjectGallery('${repo.name}', 0, event)">
+                    ${t('featured.btnGallery')}
+                  </button>
+                ` : ''}
                 ${repo.homepage ? `
                   <a href="${repo.homepage}" target="_blank" rel="noopener noreferrer" class="btn-showcase-demo">
                     ${t('featured.btnDemo')}
@@ -1240,6 +1336,244 @@
       }).join('');
       initSpotlightCards();
     }
+
+    // ===== CONTROL DE CARRUSEL DE PROYECTOS DESTACADOS Y GALERÍA EN GRANDE =====
+    let currentGalleryProject = null;
+    let currentGalleryIndex = 0;
+
+    window.openProjectGallery = function(projectName, startIndex = 0, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      const images = FEATURED_PROJECT_IMAGES[projectName];
+      if (!images || images.length === 0) return;
+
+      currentGalleryProject = projectName;
+      currentGalleryIndex = Math.max(0, Math.min(startIndex, images.length - 1));
+
+      updateModalView();
+
+      const modal = document.getElementById('imageModal');
+      if (modal) {
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+    };
+
+    window.nextModalSlide = function(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      if (!currentGalleryProject) return;
+      const images = FEATURED_PROJECT_IMAGES[currentGalleryProject];
+      if (!images || images.length <= 1) return;
+      currentGalleryIndex = (currentGalleryIndex + 1) % images.length;
+      updateModalView();
+    };
+
+    window.prevModalSlide = function(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      if (!currentGalleryProject) return;
+      const images = FEATURED_PROJECT_IMAGES[currentGalleryProject];
+      if (!images || images.length <= 1) return;
+      currentGalleryIndex = (currentGalleryIndex - 1 + images.length) % images.length;
+      updateModalView();
+    };
+
+    window.goToModalSlide = function(index, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      if (!currentGalleryProject) return;
+      const images = FEATURED_PROJECT_IMAGES[currentGalleryProject];
+      if (!images || index < 0 || index >= images.length) return;
+      currentGalleryIndex = index;
+      updateModalView();
+    };
+
+    function updateModalView() {
+      if (!currentGalleryProject) return;
+      const images = FEATURED_PROJECT_IMAGES[currentGalleryProject];
+      if (!images || images.length === 0) return;
+
+      const currentItem = images[currentGalleryIndex];
+      const modalImg = document.getElementById('modalImage');
+      const modalCaption = document.getElementById('modalCaption');
+      const modalCounter = document.getElementById('modalCounter');
+      const modalProjectTitle = document.getElementById('modalProjectTitle');
+      const modalDotsContainer = document.getElementById('modalDots');
+
+      const caption = currentLang === 'en' ? currentItem.captionEn : currentItem.caption;
+
+      if (modalImg) {
+        modalImg.src = currentItem.url;
+        modalImg.alt = caption;
+      }
+      if (modalCaption) {
+        modalCaption.textContent = caption;
+      }
+      if (modalProjectTitle) {
+        modalProjectTitle.textContent = currentGalleryProject;
+      }
+      if (modalCounter) {
+        modalCounter.textContent = `${currentGalleryIndex + 1} / ${images.length}`;
+      }
+
+      if (modalDotsContainer) {
+        modalDotsContainer.innerHTML = images.map((_, i) => `
+          <button 
+            type="button" 
+            class="modal-nav-dot ${i === currentGalleryIndex ? 'active' : ''}" 
+            aria-label="Ir a imagen ${i + 1}"
+            onclick="goToModalSlide(${i}, event)">
+          </button>
+        `).join('');
+      }
+
+      const prevBtn = document.getElementById('modalPrevBtn');
+      const nextBtn = document.getElementById('modalNextBtn');
+      if (prevBtn && nextBtn) {
+        const showNav = images.length > 1;
+        prevBtn.style.display = showNav ? 'flex' : 'none';
+        nextBtn.style.display = showNav ? 'flex' : 'none';
+      }
+
+      // Sincronizar también con la tarjeta del carrusel si está en pantalla
+      const carouselId = `carousel-${currentGalleryProject.replace(/[^a-zA-Z0-9_-]/g, '')}`;
+      const cardCarousel = document.getElementById(carouselId);
+      if (cardCarousel) {
+        const slides = cardCarousel.querySelectorAll('.carousel-slide');
+        const dots = cardCarousel.querySelectorAll('.carousel-dot');
+        const cardCaption = cardCarousel.querySelector('.carousel-caption-text');
+        slides.forEach((s, idx) => s.classList.toggle('active', idx === currentGalleryIndex));
+        dots.forEach((d, idx) => d.classList.toggle('active', idx === currentGalleryIndex));
+        cardCarousel.dataset.currentIndex = currentGalleryIndex;
+        if (cardCaption) cardCaption.textContent = caption;
+      }
+    }
+
+    window.changeCarouselSlide = function(carouselId, step, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      const carousel = document.getElementById(carouselId);
+      if (!carousel) return;
+      const slides = carousel.querySelectorAll('.carousel-slide');
+      const dots = carousel.querySelectorAll('.carousel-dot');
+      const captionText = carousel.querySelector('.carousel-caption-text');
+      if (slides.length <= 1) return;
+
+      let current = parseInt(carousel.dataset.currentIndex || '0', 10);
+      slides[current].classList.remove('active');
+      if (dots[current]) dots[current].classList.remove('active');
+
+      current = (current + step + slides.length) % slides.length;
+      carousel.dataset.currentIndex = current;
+
+      slides[current].classList.add('active');
+      if (dots[current]) dots[current].classList.add('active');
+      if (captionText && slides[current].dataset.caption) {
+        captionText.textContent = slides[current].dataset.caption;
+      }
+    };
+
+    window.goToCarouselSlide = function(carouselId, targetIndex, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      const carousel = document.getElementById(carouselId);
+      if (!carousel) return;
+      const slides = carousel.querySelectorAll('.carousel-slide');
+      const dots = carousel.querySelectorAll('.carousel-dot');
+      const captionText = carousel.querySelector('.carousel-caption-text');
+      if (slides.length <= 1) return;
+
+      let current = parseInt(carousel.dataset.currentIndex || '0', 10);
+      if (current === targetIndex) return;
+
+      slides[current].classList.remove('active');
+      if (dots[current]) dots[current].classList.remove('active');
+
+      carousel.dataset.currentIndex = targetIndex;
+      slides[targetIndex].classList.add('active');
+      if (dots[targetIndex]) dots[targetIndex].classList.add('active');
+      if (captionText && slides[targetIndex].dataset.caption) {
+        captionText.textContent = slides[targetIndex].dataset.caption;
+      }
+    };
+
+    window.openImageModalFromCarousel = function(carouselId, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      const carousel = document.getElementById(carouselId);
+      if (!carousel) return;
+      const projectName = carouselId.replace(/^carousel-/, '');
+      const currentIndex = parseInt(carousel.dataset.currentIndex || '0', 10);
+      openProjectGallery(projectName, currentIndex, event);
+    };
+
+    window.openImageModal = function(src, caption, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      // Buscar el proyecto que contiene esta imagen
+      let foundProject = null;
+      let foundIndex = 0;
+      for (const [pName, pImgs] of Object.entries(FEATURED_PROJECT_IMAGES)) {
+        const idx = pImgs.findIndex(img => img.url === src);
+        if (idx !== -1) {
+          foundProject = pName;
+          foundIndex = idx;
+          break;
+        }
+      }
+      if (foundProject) {
+        openProjectGallery(foundProject, foundIndex, event);
+      } else {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const modalCaption = document.getElementById('modalCaption');
+        if (!modal || !modalImg) return;
+        modalImg.src = src;
+        if (modalCaption) modalCaption.textContent = caption || '';
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    };
+
+    window.closeImageModal = function() {
+      const modal = document.getElementById('imageModal');
+      if (!modal) return;
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      currentGalleryProject = null;
+    };
+
+    document.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('imageModal');
+      if (!modal || !modal.classList.contains('active')) return;
+
+      if (e.key === 'Escape') {
+        closeImageModal();
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        nextModalSlide(e);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        prevModalSlide(e);
+      }
+    });
 
     function filterAndSortRepos(repos) {
       const searchInput = document.getElementById('q');
@@ -1925,5 +2259,42 @@
       init();
     }
   </script>
+  <!-- MODAL LIGHTBOX / CARRUSEL EN GRANDE -->
+  <div id="imageModal" class="image-modal" aria-hidden="true" role="dialog" aria-label="Vista previa de captura">
+    <div class="image-modal-backdrop" onclick="closeImageModal()"></div>
+    
+    <div class="image-modal-dialog">
+      <!-- Barra superior del modal -->
+      <div class="modal-top-bar">
+        <div class="modal-title-wrap">
+          <i class="fas fa-terminal" style="color: var(--accent-primary); font-size: 0.85rem;"></i>
+          <span id="modalProjectTitle" class="modal-project-title">Proyecto</span>
+          <span id="modalCounter" class="modal-counter">1 / 1</span>
+        </div>
+        <button type="button" class="image-modal-close" onclick="closeImageModal()" aria-label="Cerrar modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Contenedor de la imagen con flechas de navegación -->
+      <div class="modal-image-wrapper">
+        <button id="modalPrevBtn" type="button" class="modal-nav-arrow modal-arrow-prev" aria-label="Anterior" onclick="prevModalSlide(event)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        
+        <img id="modalImage" src="" alt="Captura de pantalla ampliada" />
+        
+        <button id="modalNextBtn" type="button" class="modal-nav-arrow modal-arrow-next" aria-label="Siguiente" onclick="nextModalSlide(event)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <!-- Pie del modal con subtítulo y dots -->
+      <div class="modal-bottom-bar">
+        <p id="modalCaption" class="modal-caption"></p>
+        <div id="modalDots" class="modal-nav-dots"></div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
