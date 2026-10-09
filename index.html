@@ -726,9 +726,26 @@
           caption: 'Módulos y arquitectura de la solución',
           captionEn: 'Solution modules and architecture'
         }
+      ],
+      'Pokedex': [
+        {
+          url: 'assets/img/pokedex/pokedex-main.png',
+          caption: 'Chasis interactivo con LEDs, controles táctiles y buscador',
+          captionEn: 'Interactive chassis with LEDs, touch controls and search'
+        },
+        {
+          url: 'assets/img/pokedex/pokedex-grid.png',
+          caption: 'Listado completo de 151 Pokémon con vista en cuadrícula y filtros',
+          captionEn: 'Complete 151 Pokémon roster with grid view and elemental filters'
+        },
+        {
+          url: 'assets/img/pokedex/pokedex-modal.png',
+          caption: 'Escaneo biométrico, estadísticas base, tipos y rugido en audio',
+          captionEn: 'Biometric scan, base stats, types and audio roar'
+        }
       ]
     };
-    const CACHE_KEY = "github_portfolio_cache";
+    const CACHE_KEY = "github_portfolio_cache_v2";
     const CACHE_TTL = 30 * 60 * 1000; // 30 minutos
 
     const LANGUAGE_COLORS = {
@@ -1189,6 +1206,7 @@
         const repos = reposData.map(r => ({
           name: r.name,
           html_url: r.html_url,
+          homepage: r.homepage || (r.name && r.name.toLowerCase() === 'pokedex' ? `https://${GITHUB_USERNAME}.github.io/Pokedex/` : null),
           description: r.description || 'Sin descripción',
           language: r.language || 'Otros',
           stargazers_count: r.stargazers_count || 0,
@@ -1242,12 +1260,17 @@
     function getRepoShowcaseMeta(repo) {
       const lang = (repo.language || '').toLowerCase();
       const topics = (repo.topics || []).map(t => t.toLowerCase());
+      const repoNameLower = (repo.name || '').toLowerCase();
 
       let icon = 'fas fa-layer-group';
       let categoryEs = 'Proyecto Software';
       let categoryEn = 'Software Project';
 
-      if (lang === 'java' || topics.includes('java') || topics.includes('backend') || topics.includes('spring')) {
+      if (repoNameLower.includes('pokedex') || topics.includes('pokemon') || topics.includes('pokeapi')) {
+        icon = 'fas fa-gamepad';
+        categoryEs = 'Web App & PokéAPI';
+        categoryEn = 'Web App & PokéAPI';
+      } else if (lang === 'java' || topics.includes('java') || topics.includes('backend') || topics.includes('spring')) {
         icon = 'fab fa-java';
         categoryEs = 'Backend & Java';
         categoryEn = 'Backend & Java';
